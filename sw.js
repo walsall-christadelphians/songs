@@ -1,4 +1,4 @@
-const CACHE = 'hymnbook-v3';
+const CACHE = 'hymnbook-v4';
 const CORE = ['./', 'index.html', 'songs.json', 'manifest.webmanifest', 'icon.svg'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)));
@@ -17,7 +17,7 @@ self.addEventListener('fetch', e => {
   const fresh = req.mode === 'navigate' || /\.(html|json|js|webmanifest)$/.test(url.pathname) || url.pathname.endsWith('/');
   const save = res => { if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return res; };
   if (fresh) {
-    e.respondWith(fetch(req).then(save).catch(() => caches.match(req, {ignoreSearch: true}).then(r => r || caches.match('index.html'))));
+    e.respondWith(fetch(req.url, {cache: 'no-cache'}).then(save).catch(() => caches.match(req, {ignoreSearch: true}).then(r => r || caches.match('index.html'))));
   } else {
     e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(save)));
   }
