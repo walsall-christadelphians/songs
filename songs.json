@@ -1303,9 +1303,56 @@
   ],
   "sheet": "music/ill-walk-by-faith-chords.pdf",
   "sheetLabel": "Chords",
-  "sheetPages": [
-   "music/ill-walk-by-faith-chords-1.png",
-   "music/ill-walk-by-faith-chords-2.png"
+  "chordNote": "Key of E · one chord per bar",
+  "chordSheet": [
+   {
+    "label": "Verse 1",
+    "lines": [
+     "[E]Elisha’s servant couldn’t see the [B]fire, till You [C#m]opened up his [A]eyes.",
+     "[E]The hills were filled with heaven’s [B]army, the [C#m]unseen by his [A]side."
+    ]
+   },
+   {
+    "label": "Pre-chorus",
+    "lines": [
+     "And [A]when I can’t see the [A]way ahead, I’ll trust the [A]words You’ve [A]said."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "I’ll walk by [E]faith – won’t walk by [B]sight – Your word [C#m]lights my every [A]way –",
+     "when I can’t [E]see, still I [B]believe – You’re the [C#m]vision right in front of [A]me."
+    ]
+   },
+   {
+    "label": "Tag",
+    "lines": [
+     "[E]Woah – ah [B]ahh, ohh [C#m]ohhh, You’re the [A]vision right in front of me.",
+     "[E]Woah – ah [B]ahh, ohh [C#m]  [A]"
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "[E]Like the blind men by the [B]roadside, You [C#m]healed their eyes to [A]see, and",
+     "[E]now I see the hope I’m [B]called to, [C#m]alive inside of [A]me."
+    ]
+   },
+   {
+    "label": "Bridge",
+    "lines": [
+     "Open my [A]eyes, open my eyes to see, [B]what’s real in heaven’s light,",
+     "faith is the [C#m]sight that leads me on – till all I [B]see is You alone."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "I’ll walk by [E]faith – won’t walk by [B]sight – Your word [C#m]lights my every [A]way –",
+     "when I can’t [E]see, still I [B]believe – You’re the [C#m]vision right in front of [A]me."
+    ]
+   }
   ]
  },
  {

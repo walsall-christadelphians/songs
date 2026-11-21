@@ -63,6 +63,10 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
 .pager{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:flex-start;overscroll-behavior-x:contain}
 .pager::-webkit-scrollbar{display:none}
 .panel{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;padding-top:6px}
+.cline{margin:0 0 6px;font-size:var(--fs);line-height:1.3}
+.seg{display:inline-flex;flex-direction:column;vertical-align:bottom;white-space:pre-wrap}
+.ch{font-size:.8em;font-weight:700;color:light-dark(#7a4fd6,#b9a2f5);min-height:1.2em;padding-inline-end:.35em}
+.chords-part{margin-top:22px}
 .music-label{color:var(--accent);font-weight:600;font-size:15px;margin:18px 0 10px}
 .page{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--rule);border-radius:6px;margin:0 0 12px}
 .note a{color:var(--accent)}
@@ -132,6 +136,19 @@ function renderIndex(term = '') {
     : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
 }
 
+// "[E]Elisha’s servant [B]fire" → chord names sit above the word where they change
+function chordLine(line) {
+  const segs = [];
+  const re = /\[([^\]]+)\]/g;
+  let last = 0, chord = '', m;
+  while ((m = re.exec(line))) {
+    if (m.index > last || chord) segs.push([chord, line.slice(last, m.index)]);
+    chord = m[1]; last = re.lastIndex;
+  }
+  segs.push([chord, line.slice(last)]);
+  return `<p class="cline">${segs.filter(([c, t]) => c || t).map(([c, t]) => `<span class="seg"><b class="ch">${c ? esc(c) : '&nbsp;'}</b><span>${esc(t).replace(/^ /, '&nbsp;').replace(/ $/, '&nbsp;') || '&nbsp;'}</span></span>`).join('')}</p>`;
+}
+
 function renderHymn(h) {
   const parts = h.parts.map(p => {
     const src = p.repeat ? h.parts.find(x => x.label === p.label && x.lines) : p;
@@ -149,10 +166,13 @@ function renderHymn(h) {
     ${parts}
     <footer class="note">${credits(h) ? `<p class="credits">${esc(credits(h))}</p>` : ''}<p>Words in brackets are echoes or directions.${h.note ? ' ' + esc(h.note) : ''}</p></footer>`;
   const head = `<div class="hymn-head"><div class="title-row"><a class="back" href="#index" aria-label="All songs" title="All songs">←</a><h1>${esc(h.title)}</h1></div>${h.ref && h.ref !== h.title ? `<div class="sub">${esc(h.ref)}</div>` : ''}</div>`;
-  if (!h.sheetPages) {
+  if (!h.sheetPages && !h.chordSheet) {
     view.innerHTML = head + words;
   } else {
-    const music = `<p class="music-label">${esc(h.sheetLabel)}</p>
+    const music = h.chordSheet ? `<p class="music-label">${esc(h.sheetLabel)}${h.chordNote ? ` <span class="ref">${esc(h.chordNote)}</span>` : ''}</p>
+      ${h.chordSheet.map(p => `<section class="part chords-part"><div class="label"><b>${esc(p.label)}</b></div>${(p.repeat ? h.chordSheet.find(x => x.label === p.label && x.lines) : p).lines.map(chordLine).join('')}</section>`).join('')}
+      <p class="note"><a href="${esc(h.sheet)}" target="_blank" rel="noopener">Original chord chart (PDF)</a></p>`
+    : `<p class="music-label">${esc(h.sheetLabel)}</p>
       ${h.sheetPages.map((src, i) => `<img class="page" src="${esc(src)}" alt="${esc(h.sheetLabel)}, page ${i + 1} of ${h.sheetPages.length}" loading="lazy">`).join('')}
       <p class="note"><a href="${esc(h.sheet)}" target="_blank" rel="noopener">Open as PDF</a> to print or zoom in.</p>`;
     view.innerHTML = head + `<div class="tabs" role="tablist">
