@@ -59,8 +59,10 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
 .chorus .line{font-style:italic}
 .echo{color:var(--soft);font-size:.88em}
 .note{color:var(--soft);font-size:13px;margin-top:44px;border-top:1px solid var(--rule);padding-top:12px}
-.back{display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 20px 0 14px;margin-bottom:14px;border:2px solid var(--accent);border-radius:12px;color:var(--accent);text-decoration:none;font-size:19px;font-weight:600}
-.back:hover{background:var(--accent);color:var(--bg)}
+.hymn-head .sub{padding-inline-start:42px}
+.title-row{display:flex;align-items:flex-start;gap:6px;margin-inline-start:-12px}
+.back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;margin-top:-6px;border-radius:50%;color:var(--accent);text-decoration:none;font-size:34px;line-height:1}
+.back:hover{background:var(--rule)}
 </style>
 </head>
 <body>
@@ -109,8 +111,7 @@ function renderHymn(h) {
       ${lines.map(l => `<p class="line">${fmt(l)}</p>`).join('')}
     </section>`;
   }).join('');
-  view.innerHTML = `<a class="back" href="#index"><span aria-hidden="true" style="font-size:24px;line-height:1">←</span> All songs</a>
-    <div class="hymn-head"><h1>${esc(h.title)}</h1>${h.ref ? `<div class="sub">${esc(h.ref)}</div>` : ''}${credits(h) ? `<div class="sub">${esc(credits(h))}</div>` : ''}</div>
+  view.innerHTML = `<div class="hymn-head"><div class="title-row"><a class="back" href="#index" aria-label="All songs" title="All songs">←</a><h1>${esc(h.title)}</h1></div>${h.ref ? `<div class="sub">${esc(h.ref)}</div>` : ''}${credits(h) ? `<div class="sub">${esc(credits(h))}</div>` : ''}</div>
     ${h.audio ? `<audio class="player" controls preload="none" src="${esc(h.audio)}"></audio>` : ''}
     <div class="tools">
       ${h.sheet ? `<a class="btn sheet" href="${esc(h.sheet)}" target="_blank" rel="noopener">♫ ${esc(h.sheetLabel)} (PDF)</a>` : ''}
