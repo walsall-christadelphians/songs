@@ -125,7 +125,7 @@ const ICONS = {
 };
 const KINDS = { rec: 'Recording', chords: 'Chords', sheet: 'Sheet music' };
 const badge = (k, size) => `<span class="badge b-${k}" title="${KINDS[k]}" role="img" aria-label="${KINDS[k]}">${ICONS[k]}</span>`;
-const kinds = h => [h.audio && 'rec', h.sheet && (/^chords/i.test(h.sheetLabel) ? 'chords' : 'sheet')].filter(Boolean);
+const kinds = h => [h.audio && 'rec', (h.sheet || h.chordSheet) && (/^chords/i.test(h.sheetLabel) ? 'chords' : 'sheet')].filter(Boolean);
 
 function renderIndex(term = '') {
   const t = term.trim().toLowerCase();
@@ -171,7 +171,7 @@ function renderHymn(h) {
   } else {
     const music = h.chordSheet ? `<p class="music-label">${esc(h.sheetLabel)}${h.chordNote ? ` <span class="ref">${esc(h.chordNote)}</span>` : ''}</p>
       ${h.chordSheet.map(p => `<section class="part chords-part"><div class="label"><b>${esc(p.label)}</b></div>${(p.repeat ? h.chordSheet.find(x => x.label === p.label && x.lines) : p).lines.map(chordLine).join('')}</section>`).join('')}
-      <p class="note"><a href="${esc(h.sheet)}" target="_blank" rel="noopener">Original chord chart (PDF)</a></p>`
+      ${h.sheet ? `<p class="note"><a href="${esc(h.sheet)}" target="_blank" rel="noopener">Original chord chart (PDF)</a></p>` : ''}`
     : `<p class="music-label">${esc(h.sheetLabel)}</p>
       ${h.sheetPages.map((src, i) => `<img class="page" src="${esc(src)}" alt="${esc(h.sheetLabel)}, page ${i + 1} of ${h.sheetPages.length}" loading="lazy">`).join('')}
       <p class="note"><a href="${esc(h.sheet)}" target="_blank" rel="noopener">Open as PDF</a> to print or zoom in.</p>`;

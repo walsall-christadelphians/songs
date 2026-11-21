@@ -1395,5 +1395,129 @@
     "repeat": true
    }
   ]
+ },
+ {
+  "id": "psalm-24",
+  "title": "Psalm 24",
+  "ref": "Psalm 24",
+  "words": "Scripture",
+  "parts": [
+   {
+    "label": "Verse 1",
+    "lines": [
+     "To Yahweh the earth and her fullness",
+     "The world and the dwellers in her",
+     "For he upon the seas he founded her",
+     "And upon rivers he prepared her"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "Who will go up in the mountain of Yahweh?",
+     "And who will stand in his holy place?"
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "Innocent palms and a pure heart",
+     "Which has not lifted up to vanity his soul",
+     "And not been sworn to deceit"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 3",
+    "lines": [
+     "He will lift up blessing from Yahweh",
+     "And righteousness from God his saviour",
+     "This generation that seeks your face"
+    ]
+   },
+   {
+    "label": "Bridge",
+    "lines": [
+     "Lift up gates your heads (be lifted doors of ages)",
+     "And he will come, the king of glory",
+     "Who is he this king of glory?",
+     "Yahweh strong and mighty",
+     "Yahweh mighty in battle!"
+    ]
+   },
+   {
+    "label": "Final bridge",
+    "lines": [
+     "Lift up gates your heads (be lifted doors of ages)",
+     "And he will come, the king of glory",
+     "Who is he this king of glory?",
+     "Yahweh of hosts",
+     "He is the king of glory!"
+    ]
+   }
+  ],
+  "chordNote": "“-” means minor, e.g. A- = Am",
+  "chordSheet": [
+   {
+    "label": "Verse 1",
+    "lines": [
+     "To [C]Yahweh the [F]earth and her [C]fullness",
+     "The [C]world and the [F]dwellers in [G]her",
+     "For [C]he [C/E]upon the [F]seas he [G]foun[G/B]ded [C]her",
+     "And upon [F]rivers [G]he pre[C]pared her"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "[C/E]Who will [F]go up [C/E]in the [D-]mountain of [G]Yah[C]weh?",
+     "[C/E]And who will [F]stand [C/E]in his [D-]holy [G]place?"
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "[E]Innocent palms and a [A-]pure [C/G]heart",
+     "Which [F]has not lifted [G]up to vani[C]ty [G/B]his [A-]soul",
+     "And [F]not been [G]sworn to [C]deceit"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 3",
+    "lines": [
+     "[E]He will lift up [A-]blessing from [C/G]Yahweh",
+     "And [F]righteous[G]ness from God [C]his [G/B]sav[A-]iour",
+     "This [F]generation [G]that seeks your [C]face"
+    ]
+   },
+   {
+    "label": "Bridge",
+    "lines": [
+     "[Eb]Lift up [Ab]gates your [Bb]heads (be lifted doors of ages)",
+     "[Eb]And he will [Ab]come, the [Bb]king of glory",
+     "[G]Who is he this king of [Ab]glory? [Eb/G]",
+     "[F-]Yah[Eb/G]weh [Ab]strong and [E/b]mighty",
+     "[F-]Yah[Eb/G]weh [Ab]mighty in [E/b]battle!"
+    ]
+   },
+   {
+    "label": "Final bridge",
+    "lines": [
+     "[Eb]Lift up [Ab]gates your [Bb]heads (be lifted doors of ages)",
+     "[Eb]And he will [Ab]come, the [Bb]king of glory",
+     "[G]Who is he this king of [Ab]glory? [Eb/G]",
+     "[F-]Yah[Eb/G]weh [Ab]of [Eb/G]hosts",
+     "[F-]He is the [Bb]king of [Eb]glory!"
+    ]
+   }
+  ],
+  "sheetLabel": "Chords"
  }
 ]
