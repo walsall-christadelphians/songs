@@ -47,6 +47,7 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
 .tools{display:flex;gap:8px;justify-content:flex-end;margin:12px 0 6px;flex-wrap:wrap}
 .tools .btn{background:transparent;color:var(--ink);border-color:var(--rule)}
 .tools .btn:hover{background:var(--rule)}
+.sheet{display:inline-flex;align-items:center;text-decoration:none;margin-inline-end:auto;color:var(--accent)!important;font-size:15px}
 .part{margin:28px 0 0;font-size:var(--fs);line-height:1.5}
 .label{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
 .label b{font:600 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--accent)}
@@ -94,7 +95,7 @@ function renderIndex(term = '') {
   const t = term.trim().toLowerCase();
   const hits = HYMNS.filter(h => !t || text(h).includes(t));
   view.innerHTML = hits.length
-    ? `<ul class="list">${hits.map(h => `<li><a href="#${h.id}"><span><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}${h.audio ? ' · ♪ recording' : ''}</span></span></a></li>`).join('')}</ul>`
+    ? `<ul class="list">${hits.map(h => `<li><a href="#${h.id}"><span><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}${h.audio ? ' · ♪ recording' : ''}${h.sheet ? ' · ' + esc(h.sheetLabel.split(' (')[0].toLowerCase()) : ''}</span></span></a></li>`).join('')}</ul>`
     : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
 }
 
@@ -111,6 +112,7 @@ function renderHymn(h) {
     <div class="hymn-head"><h1>${esc(h.title)}</h1>${h.ref ? `<div class="sub">${esc(h.ref)}</div>` : ''}${credits(h) ? `<div class="sub">${esc(credits(h))}</div>` : ''}</div>
     ${h.audio ? `<audio class="player" controls preload="none" src="${esc(h.audio)}"></audio>` : ''}
     <div class="tools">
+      ${h.sheet ? `<a class="btn sheet" href="${esc(h.sheet)}" target="_blank" rel="noopener">♫ ${esc(h.sheetLabel)} (PDF)</a>` : ''}
       <button class="btn" id="smaller" aria-label="Smaller text">A−</button>
       <button class="btn" id="bigger" aria-label="Larger text">A+</button>
     </div>

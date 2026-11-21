@@ -277,7 +277,9 @@
     "label": "Chorus",
     "repeat": true
    }
-  ]
+  ],
+  "sheet": "music/beatitudes-song-chords.pdf",
+  "sheetLabel": "Chords"
  },
  {
   "id": "colossians-1",
@@ -331,7 +333,9 @@
      "He has rescued us from darkness, to the kingdom of the Son that He loves"
     ]
    }
-  ]
+  ],
+  "sheet": "music/colossians-1-sheet-music.pdf",
+  "sheetLabel": "Sheet music"
  },
  {
   "id": "we-are-chosen-we-are-loved",
@@ -418,7 +422,9 @@
     "label": "Chorus",
     "repeat": true
    }
-  ]
+  ],
+  "sheet": "music/we-are-chosen-we-are-loved-chords.pdf",
+  "sheetLabel": "Chords"
  },
  {
   "id": "in-the-beginning-creation-song",
@@ -626,7 +632,9 @@
      "And God saw all that he had made and it was very good"
     ]
    }
-  ]
+  ],
+  "sheet": "music/genesis-1-sheet-music.pdf",
+  "sheetLabel": "Sheet music"
  },
  {
   "id": "god-is-our-refuge",
@@ -807,7 +815,9 @@
      "and let God do the rest"
     ]
    }
-  ]
+  ],
+  "sheet": "music/let-no-one-say-chords.pdf",
+  "sheetLabel": "Chords"
  },
  {
   "id": "go-and-do-likewise",
@@ -937,7 +947,9 @@
      "Their hearts will be revived who love His name."
     ]
    }
-  ]
+  ],
+  "sheet": "music/psalm-69-sheet-music.pdf",
+  "sheetLabel": "Sheet music"
  },
  {
   "id": "strangers-and-pilgrims",
@@ -1007,7 +1019,9 @@
      "Strangers and pilgrims on the earth."
     ]
    }
-  ]
+  ],
+  "sheet": "music/strangers-and-pilgrims-sheet-music.pdf",
+  "sheetLabel": "Sheet music (tune and harmony)"
  },
  {
   "id": "the-fruit-of-the-spirit",
@@ -1242,7 +1256,9 @@
     "label": "Chorus",
     "repeat": true
    }
-  ]
+  ],
+  "sheet": "music/ill-walk-by-faith-chords.pdf",
+  "sheetLabel": "Chords"
  },
  {
   "id": "ye-men-of-galilee",
