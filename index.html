@@ -36,10 +36,20 @@ header{background:var(--cover);color:var(--on);padding:14px max(5vw,16px) 18px;p
 .btn:hover{background:#ffffff33}
 main{max-width:760px;margin:0 auto;padding:clamp(20px,4vw,44px) max(5vw,16px) 80px}
 .list{list-style:none;margin:0;padding:0}
-.list a{display:block;align-items:baseline;padding:14px 4px;border-bottom:1px solid var(--rule);color:inherit;text-decoration:none}
+.list a{display:flex;align-items:center;gap:12px;padding:14px 4px;border-bottom:1px solid var(--rule);color:inherit;text-decoration:none}
 .list a:hover .t{color:var(--accent)}
 .list .t{font:600 22px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .list .m{display:block;color:var(--soft);font-size:14px;margin-top:2px}
+.list .txt{flex:1}
+.badges{display:flex;gap:6px;flex:none}
+.badge{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#fff}
+.badge svg{width:19px;height:19px}
+.b-rec{background:light-dark(#e2563b,#f07a5f)}
+.b-chords{background:light-dark(#7a4fd6,#9c7bf0)}
+.b-sheet{background:light-dark(#d99a00,#f0b429)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--soft);font-size:14px;margin:0 0 6px;padding:0 4px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .badge{width:24px;height:24px}.legend .badge svg{width:14px;height:14px}
 .empty{color:var(--soft);padding:24px 4px}
 .hymn-head{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:8px}
 h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;margin:0;text-wrap:balance}
@@ -104,11 +114,21 @@ const refs = h => h.ref || '';
 const isChorus = l => /chorus|refrain/i.test(l);
 const credits = h => [h.words && 'Words: ' + h.words, h.music && 'Music: ' + h.music, h.source, h.year && '© ' + h.year].filter(Boolean).join(' · ');
 
+const ICONS = {
+  rec: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4.5" height="6.5" rx="1.5" fill="currentColor"/><rect x="16.5" y="14" width="4.5" height="6.5" rx="1.5" fill="currentColor"/></svg>',
+  chords: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 4h14M6 4v16M10 4v16M14 4v16M18 4v16M6 9h12M6 14h12"/><circle cx="10" cy="11.5" r="2" fill="currentColor" stroke="none"/><circle cx="14" cy="16.5" r="2" fill="currentColor" stroke="none"/></svg>',
+  sheet: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 4.5 20 2v13.5a3 3 0 1 1-2-2.83V6.6l-7 1.6v9.3a3 3 0 1 1-2-2.83z"/></svg>'
+};
+const KINDS = { rec: 'Recording', chords: 'Chords', sheet: 'Sheet music' };
+const badge = (k, size) => `<span class="badge b-${k}" title="${KINDS[k]}" role="img" aria-label="${KINDS[k]}">${ICONS[k]}</span>`;
+const kinds = h => [h.audio && 'rec', h.sheet && (/^chords/i.test(h.sheetLabel) ? 'chords' : 'sheet')].filter(Boolean);
+
 function renderIndex(term = '') {
   const t = term.trim().toLowerCase();
   const hits = HYMNS.filter(h => !t || text(h).includes(t));
+  const legend = `<p class="legend">${Object.keys(KINDS).map(k => `<span>${badge(k)}${KINDS[k]}</span>`).join('')}</p>`;
   view.innerHTML = hits.length
-    ? `<ul class="list">${hits.map(h => `<li><a href="#${h.id}"><span><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}${h.audio ? ' · ♪ recording' : ''}${h.sheet ? ' · ♫ ' + esc(h.sheetLabel.split(' (')[0].toLowerCase()) : ''}</span></span></a></li>`).join('')}</ul>`
+    ? legend + `<ul class="list">${hits.map(h => `<li><a href="#${h.id}"><span class="txt"><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span><span class="badges">${kinds(h).map(k => badge(k)).join('')}</span></a></li>`).join('')}</ul>`
     : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
 }
 
