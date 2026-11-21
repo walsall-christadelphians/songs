@@ -1,4 +1,4 @@
-const CACHE = 'hymnbook-v12';
+const CACHE = 'hymnbook-v13';
 const CORE = ['./', 'index.html', 'songs.json', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'icon-180.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)));
