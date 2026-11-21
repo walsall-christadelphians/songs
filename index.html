@@ -47,6 +47,15 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
 .tools{display:flex;gap:8px;justify-content:flex-end;margin:12px 0 6px;flex-wrap:wrap}
 .tools .btn{background:transparent;color:var(--ink);border-color:var(--rule)}
 .tools .btn:hover{background:var(--rule)}
+.tabs{position:sticky;top:var(--hh,0px);z-index:1;display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-bottom:1px solid var(--rule);margin:8px 0 0}
+.tabs button{height:48px;border:0;background:none;font-size:17px;font-weight:600;color:var(--soft);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+.pager{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:flex-start;overscroll-behavior-x:contain}
+.pager::-webkit-scrollbar{display:none}
+.panel{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;padding-top:6px}
+.music-label{color:var(--accent);font-weight:600;font-size:15px;margin:18px 0 10px}
+.page{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--rule);border-radius:6px;margin:0 0 12px}
+.note a{color:var(--accent)}
 .sheet{display:inline-flex;align-items:center;text-decoration:none;margin-inline-end:auto;color:var(--accent)!important;font-size:15px}
 .part{margin:28px 0 0;font-size:var(--fs);line-height:1.5}
 .label{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
@@ -99,7 +108,7 @@ function renderIndex(term = '') {
   const t = term.trim().toLowerCase();
   const hits = HYMNS.filter(h => !t || text(h).includes(t));
   view.innerHTML = hits.length
-    ? `<ul class="list">${hits.map(h => `<li><a href="#${h.id}"><span><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}${h.audio ? ' · ♪ recording' : ''}${h.sheet ? ' · ' + esc(h.sheetLabel.split(' (')[0].toLowerCase()) : ''}</span></span></a></li>`).join('')}</ul>`
+    ? `<ul class="list">${hits.map(h => `<li><a href="#${h.id}"><span><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}${h.audio ? ' · ♪ recording' : ''}${h.sheet ? ' · ♫ ' + esc(h.sheetLabel.split(' (')[0].toLowerCase()) : ''}</span></span></a></li>`).join('')}</ul>`
     : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
 }
 
@@ -112,18 +121,68 @@ function renderHymn(h) {
       ${lines.map(l => `<p class="line">${fmt(l)}</p>`).join('')}
     </section>`;
   }).join('');
-  view.innerHTML = `<div class="hymn-head"><div class="title-row"><a class="back" href="#index" aria-label="All songs" title="All songs">←</a><h1>${esc(h.title)}</h1></div>${h.ref ? `<div class="sub">${esc(h.ref)}</div>` : ''}</div>
-    ${h.audio ? `<audio class="player" controls preload="none" src="${esc(h.audio)}"></audio>` : ''}
+  const words = `${h.audio ? `<audio class="player" controls preload="none" src="${esc(h.audio)}"></audio>` : ''}
     <div class="tools">
-      ${h.sheet ? `<a class="btn sheet" href="${esc(h.sheet)}" target="_blank" rel="noopener">♫ ${esc(h.sheetLabel)} (PDF)</a>` : ''}
       <button class="btn" id="smaller" aria-label="Smaller text">A−</button>
       <button class="btn" id="bigger" aria-label="Larger text">A+</button>
     </div>
     ${parts}
     <footer class="note">${credits(h) ? `<p class="credits">${esc(credits(h))}</p>` : ''}<p>Words in brackets are echoes or directions.${h.note ? ' ' + esc(h.note) : ''}</p></footer>`;
+  const head = `<div class="hymn-head"><div class="title-row"><a class="back" href="#index" aria-label="All songs" title="All songs">←</a><h1>${esc(h.title)}</h1></div>${h.ref && h.ref !== h.title ? `<div class="sub">${esc(h.ref)}</div>` : ''}</div>`;
+  if (!h.sheetPages) {
+    view.innerHTML = head + words;
+  } else {
+    const music = `<p class="music-label">${esc(h.sheetLabel)}</p>
+      ${h.sheetPages.map((src, i) => `<img class="page" src="${esc(src)}" alt="${esc(h.sheetLabel)}, page ${i + 1} of ${h.sheetPages.length}" loading="lazy">`).join('')}
+      <p class="note"><a href="${esc(h.sheet)}" target="_blank" rel="noopener">Open as PDF</a> to print or zoom in.</p>`;
+    view.innerHTML = head + `<div class="tabs" role="tablist">
+        <button role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true">Words</button>
+        <button role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1">Music</button>
+      </div>
+      <div class="pager" id="pager">
+        <section class="panel" id="panel-0" role="tabpanel" aria-labelledby="tab-0">${words}</section>
+        <section class="panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1">${music}</section>
+      </div>`;
+    setupTabs();
+  }
   document.getElementById('smaller').onclick = () => setFs(fs - 2);
   document.getElementById('bigger').onclick = () => setFs(fs + 2);
   window.scrollTo(0, 0);
+}
+
+const headerEl = document.querySelector('header');
+const headerH = () => headerEl.offsetHeight;
+new ResizeObserver(() => document.documentElement.style.setProperty('--hh', headerH() + 'px')).observe(headerEl);
+let pagerObserver;
+function setupTabs() {
+  const pager = document.getElementById('pager');
+  const panels = [...pager.children];
+  const tabs = [...document.querySelectorAll('.tabs [role=tab]')];
+  let current = 0;
+  const fit = () => { pager.style.height = panels[current].offsetHeight + 'px'; };
+  const select = (i, scroll) => {
+    current = i;
+    tabs.forEach((t, j) => { t.setAttribute('aria-selected', j === i); t.tabIndex = j === i ? 0 : -1; });
+    panels.forEach((p, j) => p.inert = j !== i);
+    if (scroll) pager.scrollTo({ left: i * pager.clientWidth, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    fit();
+    const target = pager.getBoundingClientRect().top + window.scrollY - headerH() - document.querySelector('.tabs').offsetHeight;
+    if (window.scrollY > target) window.scrollTo(0, target);
+  };
+  tabs.forEach((t, i) => {
+    t.onclick = () => select(i, true);
+    t.onkeydown = e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = e.key === 'ArrowRight' ? 1 : 0; select(n, true); tabs[n].focus(); } };
+  });
+  let timer;
+  pager.addEventListener('scroll', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { const i = Math.round(pager.scrollLeft / pager.clientWidth); if (i !== current) select(i, false); }, 80);
+  }, { passive: true });
+  if (pagerObserver) pagerObserver.disconnect();
+  pagerObserver = new ResizeObserver(fit);
+  panels.forEach(p => pagerObserver.observe(p));
+  panels[1].inert = true;
+  fit();
 }
 
 function route() {

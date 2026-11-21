@@ -279,7 +279,11 @@
    }
   ],
   "sheet": "music/beatitudes-song-chords.pdf",
-  "sheetLabel": "Chords"
+  "sheetLabel": "Chords",
+  "sheetPages": [
+   "music/beatitudes-song-chords-1.png",
+   "music/beatitudes-song-chords-2.png"
+  ]
  },
  {
   "id": "colossians-1",
@@ -335,7 +339,12 @@
    }
   ],
   "sheet": "music/colossians-1-sheet-music.pdf",
-  "sheetLabel": "Sheet music"
+  "sheetLabel": "Sheet music",
+  "sheetPages": [
+   "music/colossians-1-sheet-music-1.png",
+   "music/colossians-1-sheet-music-2.png",
+   "music/colossians-1-sheet-music-3.png"
+  ]
  },
  {
   "id": "we-are-chosen-we-are-loved",
@@ -424,7 +433,21 @@
    }
   ],
   "sheet": "music/we-are-chosen-we-are-loved-chords.pdf",
-  "sheetLabel": "Chords"
+  "sheetLabel": "Chords",
+  "sheetPages": [
+   "music/we-are-chosen-we-are-loved-chords-01.png",
+   "music/we-are-chosen-we-are-loved-chords-02.png",
+   "music/we-are-chosen-we-are-loved-chords-03.png",
+   "music/we-are-chosen-we-are-loved-chords-04.png",
+   "music/we-are-chosen-we-are-loved-chords-05.png",
+   "music/we-are-chosen-we-are-loved-chords-06.png",
+   "music/we-are-chosen-we-are-loved-chords-07.png",
+   "music/we-are-chosen-we-are-loved-chords-08.png",
+   "music/we-are-chosen-we-are-loved-chords-09.png",
+   "music/we-are-chosen-we-are-loved-chords-10.png",
+   "music/we-are-chosen-we-are-loved-chords-11.png",
+   "music/we-are-chosen-we-are-loved-chords-12.png"
+  ]
  },
  {
   "id": "in-the-beginning-creation-song",
@@ -634,7 +657,13 @@
    }
   ],
   "sheet": "music/genesis-1-sheet-music.pdf",
-  "sheetLabel": "Sheet music"
+  "sheetLabel": "Sheet music",
+  "sheetPages": [
+   "music/genesis-1-sheet-music-1.png",
+   "music/genesis-1-sheet-music-2.png",
+   "music/genesis-1-sheet-music-3.png",
+   "music/genesis-1-sheet-music-4.png"
+  ]
  },
  {
   "id": "god-is-our-refuge",
@@ -817,7 +846,14 @@
    }
   ],
   "sheet": "music/let-no-one-say-chords.pdf",
-  "sheetLabel": "Chords"
+  "sheetLabel": "Chords",
+  "sheetPages": [
+   "music/let-no-one-say-chords-1.png",
+   "music/let-no-one-say-chords-2.png",
+   "music/let-no-one-say-chords-3.png",
+   "music/let-no-one-say-chords-4.png",
+   "music/let-no-one-say-chords-5.png"
+  ]
  },
  {
   "id": "go-and-do-likewise",
@@ -949,7 +985,10 @@
    }
   ],
   "sheet": "music/psalm-69-sheet-music.pdf",
-  "sheetLabel": "Sheet music"
+  "sheetLabel": "Sheet music",
+  "sheetPages": [
+   "music/psalm-69-sheet-music-1.png"
+  ]
  },
  {
   "id": "strangers-and-pilgrims",
@@ -1021,7 +1060,12 @@
    }
   ],
   "sheet": "music/strangers-and-pilgrims-sheet-music.pdf",
-  "sheetLabel": "Sheet music (tune and harmony)"
+  "sheetLabel": "Sheet music (tune and harmony)",
+  "sheetPages": [
+   "music/strangers-and-pilgrims-sheet-music-1.png",
+   "music/strangers-and-pilgrims-sheet-music-2.png",
+   "music/strangers-and-pilgrims-sheet-music-3.png"
+  ]
  },
  {
   "id": "the-fruit-of-the-spirit",
@@ -1258,7 +1302,11 @@
    }
   ],
   "sheet": "music/ill-walk-by-faith-chords.pdf",
-  "sheetLabel": "Chords"
+  "sheetLabel": "Chords",
+  "sheetPages": [
+   "music/ill-walk-by-faith-chords-1.png",
+   "music/ill-walk-by-faith-chords-2.png"
+  ]
  },
  {
   "id": "ye-men-of-galilee",
