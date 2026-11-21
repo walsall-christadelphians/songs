@@ -1,20 +1,24 @@
-const CACHE = 'hymnbook-v2';
-const FILES = ['./', 'index.html', 'manifest.webmanifest', 'icon.svg'];
+const CACHE = 'hymnbook-v3';
+const CORE = ['./', 'index.html', 'songs.json', 'manifest.webmanifest', 'icon.svg'];
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)));
   self.skipWaiting();
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))));
   self.clients.claim();
 });
+// Pages and song data: network first so updates show straight away, cache when offline.
+// Recordings and icons: cache first, saved the first time they are played.
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  e.respondWith(
-    caches.match(e.request).then(hit => hit || fetch(e.request).then(res => {
-      const copy = res.clone();
-      caches.open(CACHE).then(c => c.put(e.request, copy));
-      return res;
-    }).catch(() => caches.match('index.html')))
-  );
+  const req = e.request;
+  if (req.method !== 'GET' || req.headers.has('range')) return;
+  const url = new URL(req.url);
+  const fresh = req.mode === 'navigate' || /\.(html|json|js|webmanifest)$/.test(url.pathname) || url.pathname.endsWith('/');
+  const save = res => { if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return res; };
+  if (fresh) {
+    e.respondWith(fetch(req).then(save).catch(() => caches.match(req, {ignoreSearch: true}).then(r => r || caches.match('index.html'))));
+  } else {
+    e.respondWith(caches.match(req).then(hit => hit || fetch(req).then(save)));
+  }
 });
