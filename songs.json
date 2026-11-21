@@ -280,9 +280,72 @@
   ],
   "sheet": "music/beatitudes-song-chords.pdf",
   "sheetLabel": "Chords",
-  "sheetPages": [
-   "music/beatitudes-song-chords-1.png",
-   "music/beatitudes-song-chords-2.png"
+  "chordNote": "Sing the chorus twice the first time and four times at the end. Bridge Dm: no third.",
+  "chordSheet": [
+   {
+    "label": "Intro",
+    "lines": [
+     "[Dm]Blessed [Gdim/C#](blessed) [Dm7/C]blessed are [G7/B]you",
+     "[Dm]Blessed [Gdim/C#](blessed) [Dm7/C]blessed are [G7/B]you",
+     "[Dm]Blessed [Gdim/C#](blessed) [Dm7/C]blessed are [G7/B]you",
+     "[Bb]Blessed [Bb/C]  [F]"
+    ]
+   },
+   {
+    "label": "Verse 1",
+    "lines": [
+     "[Bb]Blessed are the [Gdim/C#]poor in [Dm9]spirit, [Dm/C]for [Gm]theirs is the [F]kingdom of [C/E]heav’n",
+     "[Bb]Blessed are [Gdim/C#]those who [Dm9]mourn, [Dm/C]for [Bb]they shall be [Bb/C]comfort[F]ed",
+     "[Bb]Blessed are the [Gdim/C#]meek, [Dm9]  [Dm/C]for [Gm]they shall in[F]herit the [C/E]earth",
+     "[Bb]And those [Gdim/C#]who thirst for [Dm9]righ[Dm/C]teousness, [Bb]they shall be [Bb/C]satisfied [F]  [A7]"
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "[D]And those who show [Gm]mercy, for [C]they shall receive [F]mercy",
+     "And [Bb/D]blessed are the [F/C]pure, the pure [A7/C#]in [Dm]heart, for [Bb]they [G7/B]shall see [C]God.",
+     "[D]And those who show [Gm]mercy, for [C]they shall receive [F]mercy",
+     "And [Bb/D]blessed are the [F/C]pure, the pure [A7/C#]in [Dm]heart, for [Bb]they [G7/B]shall see [C]God."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "[D]Rejoice and be [Gm]glad (rejoice, [C]rejoice)",
+     "Rejoice and be [F]glad (rejoice, [Bb]rejoice)",
+     "Rejoice and be [Eb]glad (rejoice, [A7]rejoice)",
+     "For [D]great is your re[D/F#]ward in heaven",
+     "Rejoice and be [Gm]glad (rejoice, [C]rejoice)",
+     "Rejoice and be [F]glad (rejoice, [Bb]rejoice)",
+     "Rejoice and be [Eb]glad (rejoice, [A7]rejoice)",
+     "And be glad"
+    ]
+   },
+   {
+    "label": "Interlude",
+    "lines": [
+     "[Dm]  [Gdim/C#]  [Dm7/C]  [G7/B]",
+     "[Bb]  [Bb/C]  [F]"
+    ]
+   },
+   {
+    "label": "Verse 3",
+    "lines": [
+     "[Bb]Blessed are the [Gdim/C#]peace[Dm9]makers, [Dm/C]for [Gm]they shall be [F]called [C/E]sons of God",
+     "[Bb]And those [Gdim/C#]who suffer for [Dm9]righ[Dm/C]teousness, [Bb]theirs is the [Bb/C]kingdom of [F]heav’n"
+    ]
+   },
+   {
+    "label": "Bridge",
+    "lines": [
+     "[Dm]Blessed are you when people [A7/C#]insult you, persecute you and [Db]falsely say all kinds of evil against you because [D]of me"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   }
   ]
  },
  {
