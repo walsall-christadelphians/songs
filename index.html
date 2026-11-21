@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#6d1f2a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hymns">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon.svg">
+<title>Hymnbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE: reverent, quiet, legible at arm's length in a dim church
+   IDEA: a cloth-bound pew hymnal — oxblood cover, white page
+   PICTURE: the hymn page itself, set like print; hymns filed A–Z by title
+   COLOUR and TYPE: oxblood cover band, white paper, black ink; Cormorant titles, Source Serif text
+   LAYOUT: cover band with search, then one calm reading column */
+:root{color-scheme:light dark;
+  --bg:light-dark(#fbfaf8,#16120f);--ink:light-dark(#1b1715,#ece6df);
+  --soft:light-dark(#6b625c,#a89e95);--rule:light-dark(#e4ddd4,#2e2723);
+  --cover:light-dark(#6d1f2a,#3d1218);--on:#fbf6ef;--accent:light-dark(#6d1f2a,#e0a3a9);
+  --fs:19px}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Source Serif 4",Georgia,serif;overflow-x:clip}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header{background:var(--cover);color:var(--on);padding:14px max(5vw,16px) 18px;position:sticky;top:0;z-index:2}
+.bar{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.brand{font:600 26px/1 "Cormorant Garamond",serif;color:var(--on);text-decoration:none;margin-inline-end:auto;letter-spacing:.01em}
+.search{height:44px;border-radius:10px;border:1px solid #ffffff40;background:#ffffff18;color:var(--on);padding:0 12px;font-size:16px}
+.search::placeholder{color:#f3e6e0b0}
+.search{flex:1 1 100%}
+.btn{height:44px;min-width:44px;border-radius:10px;border:1px solid #ffffff40;background:#ffffff22;color:var(--on);padding:0 12px;cursor:pointer}
+.btn:hover{background:#ffffff33}
+main{max-width:760px;margin:0 auto;padding:clamp(20px,4vw,44px) max(5vw,16px) 80px}
+.list{list-style:none;margin:0;padding:0}
+.list a{display:block;align-items:baseline;padding:14px 4px;border-bottom:1px solid var(--rule);color:inherit;text-decoration:none}
+.list a:hover .t{color:var(--accent)}
+.list .t{font:600 22px/1.2 "Cormorant Garamond",serif}
+.list .m{display:block;color:var(--soft);font-size:14px;margin-top:2px}
+.empty{color:var(--soft);padding:24px 4px}
+.hymn-head{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:8px}
+h1{font:600 clamp(28px,5vw,42px)/1.05 "Cormorant Garamond",serif;margin:0;text-wrap:balance}
+.sub{color:var(--soft);font-size:14px;margin-top:6px}
+.tools{display:flex;gap:8px;justify-content:flex-end;margin:12px 0 6px;flex-wrap:wrap}
+.tools .btn{background:transparent;color:var(--ink);border-color:var(--rule)}
+.tools .btn:hover{background:var(--rule)}
+.part{margin:28px 0 0;font-size:var(--fs);line-height:1.5}
+.label{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.label b{font:600 15px/1.2 "Source Serif 4",serif;color:var(--accent)}
+.label i{font-size:15px}
+.ref{color:var(--soft);font-size:13px;font-style:normal}
+.line{margin:0;padding-inline-start:1.4em;text-indent:-1.4em}
+.vn{display:inline-block;width:1.4em;text-indent:0;font-weight:600;color:var(--accent)}
+.chorus{padding-inline-start:1.4em;border-inline-start:3px solid var(--rule)}
+.chorus .line{font-style:italic}
+.refrain .line{font-style:italic}
+.echo{color:var(--soft);font-size:.88em}
+.note{color:var(--soft);font-size:13px;margin-top:44px;border-top:1px solid var(--rule);padding-top:12px}
+.back{display:inline-flex;align-items:center;height:44px;color:var(--accent);text-decoration:none;font-size:15px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="#index">Hymnbook</a>
+    <input class="search" id="q" type="search" placeholder="Search by title, words or reference" aria-label="Search hymns">
+  </div>
+</header>
+<main id="view"></main>
+
+<script>
+{
+const HYMNS = [{
+  title: "The Law, the Prophets and the Psalms",
+  parts: [
+    {type:"verse", label:"Verse 1", theme:"The Law", ref:"Romans 10:9–10", lines:[
+      "If we try to earn our righteousness by laws in stone engraved,",
+      "Then the power of sin will reign in us; we’re bound, by law enslaved.",
+      "If our lips confess that Jesus is our Saviour and our Lord,",
+      "And our hearts believe God raised him up; we’re saved, by grace: restored."]},
+    {type:"verse", label:"Verse 2", theme:"The Prophets", ref:"Acts 3:18; Matthew 5:17; Luke 24:27; 1 Peter 1:10–11", lines:[
+      "All the prophets, Moses, Samuel, proclaimed the Saviour’s day,",
+      "So let’s hear the words they prophesied and turn from wicked ways.",
+      "They had searched and sought so carefully and spoke of coming grace,",
+      "And they asked about his suffering and when he’d take his place."]},
+    {type:"chorus", label:"Chorus", ref:"Luke 24:44–45", lines:[
+      "All the prophets, all the psalms, and all the words of Moses’ law",
+      "Must all be fulfilled in Jesus, as the faithful long foresaw.",
+      "Come and open up your minds to find the Saviour there concealed,",
+      "And in every word of Scripture see the son of God revealed."]},
+    {type:"verse", label:"Verse 3", theme:"The Psalms", ref:"Hebrews 10:5–7; Acts 13:32–33; Psalm 2:7", lines:[
+      "In the second psalm the Father says to him, “You are my son”,",
+      "And another says, “The Holy One won’t see corruption”,",
+      "Now we bring the good news promised to the fathers: God be praised!",
+      "To their children God has kept his word, for Jesus Christ is raised."]},
+    {type:"chorus", label:"Chorus", repeat:true},
+    {type:"refrain", label:"Refrain", lines:[
+      "If our lips confess that Jesus is our Saviour and our Lord,",
+      "And our hearts believe God raised him up;",
+      "we’re saved, [by grace]",
+      "we’re saved, [by grace]",
+      "we’re saved, by grace: restored."]}
+  ]
+}];
+
+const view = document.getElementById('view');
+const q = document.getElementById('q');
+const slug = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+HYMNS.forEach(h => h.id = slug(h.title));
+HYMNS.sort((a, b) => a.title.localeCompare(b.title, 'en-GB'));
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = s => esc(s).replace(/\[(.+?)\]/g, '<span class="echo">($1)</span>');
+
+let fs = 19;
+try { fs = +localStorage.getItem('hb-fs') || 19; } catch (e) {}
+const setFs = v => { fs = Math.min(30, Math.max(15, v)); document.documentElement.style.setProperty('--fs', fs + 'px'); try { localStorage.setItem('hb-fs', fs); } catch (e) {} };
+setFs(fs);
+
+const text = h => (h.title + ' ' + h.parts.map(p => (p.lines || []).join(' ') + ' ' + (p.ref || '') + ' ' + (p.theme || '')).join(' ')).toLowerCase();
+const refs = h => h.parts.filter(p => p.theme).map(p => p.theme).join(' · ');
+
+function renderIndex(term = '') {
+  const t = term.trim().toLowerCase();
+  const hits = HYMNS.filter(h => !t || text(h).includes(t));
+  view.innerHTML = hits.length
+    ? `<ul class="list">${hits.map(h => `<li><a href="#${h.id}"><span><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span></a></li>`).join('')}</ul>`
+    : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
+}
+
+function renderHymn(h) {
+  let vn = 0;
+  const chorus = h.parts.find(p => p.type === 'chorus' && p.lines);
+  const parts = h.parts.map(p => {
+    const lines = p.repeat ? chorus.lines : p.lines;
+    const isVerse = p.type === 'verse';
+    if (isVerse) vn++;
+    return `<section class="part ${p.type}">
+      <div class="label"><b>${esc(p.label)}</b>${p.theme ? `<i>${esc(p.theme)}</i>` : ''}${p.ref ? `<span class="ref">${esc(p.ref)}</span>` : ''}</div>
+      ${lines.map((l, i) => `<p class="line">${isVerse ? `<span class="vn">${i === 0 ? vn : ''}</span>` : ''}${fmt(l)}</p>`).join('')}
+    </section>`;
+  }).join('');
+  view.innerHTML = `<a class="back" href="#index">← All hymns</a>
+    <div class="hymn-head"><div><h1>${esc(h.title)}</h1><div class="sub">${esc(refs(h))}</div></div></div>
+    <div class="tools">
+      <button class="btn" id="smaller" aria-label="Smaller text">A−</button>
+      <button class="btn" id="bigger" aria-label="Larger text">A+</button>
+    </div>
+    ${parts}
+    <p class="note">Words in brackets in the refrain are echoes.</p>`;
+  document.getElementById('smaller').onclick = () => setFs(fs - 2);
+  document.getElementById('bigger').onclick = () => setFs(fs + 2);
+  window.scrollTo(0, 0);
+}
+
+function route() {
+  const id = location.hash.slice(1);
+  const h = id && HYMNS.find(x => x.id === id);
+  if (h) { q.value = ''; renderHymn(h); } else renderIndex(q.value);
+}
+
+q.addEventListener('input', () => { if (HYMNS.some(x => '#' + x.id === location.hash)) location.hash = 'index'; renderIndex(q.value); });
+addEventListener('hashchange', route);
+route();
+
+if ('serviceWorker' in navigator) {
+  try { navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (e) {}
+}
+}
+</script>
+</body>
+</html>

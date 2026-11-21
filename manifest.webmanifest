@@ -1,0 +1,11 @@
+{
+  "name": "Hymnbook",
+  "short_name": "Hymns",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fbfaf8",
+  "theme_color": "#6d1f2a",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
