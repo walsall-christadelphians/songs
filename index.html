@@ -9,7 +9,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg">
 <link rel="apple-touch-icon" href="icon.svg">
-<title>Hymnbook</title>
+<title>Psalms, Hymns and Spiritual Songs</title>
 <style>
 /* VOICE: reverent, quiet, legible at arm's length in a dim church
    IDEA: a cloth-bound pew hymnal — teal cover, white page
@@ -28,7 +28,7 @@ button,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 header{background:var(--cover);color:var(--on);padding:14px max(5vw,16px) 18px;position:sticky;top:0;z-index:2}
 .bar{max-width:760px;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.brand{font:600 26px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--on);text-decoration:none;margin-inline-end:auto;letter-spacing:.01em}
+.brand{font:600 clamp(19px,4.5vw,26px)/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--on);text-decoration:none;margin-inline-end:auto;letter-spacing:.01em}
 .search{height:44px;border-radius:10px;border:1px solid #ffffff40;background:#ffffff18;color:var(--on);padding:0 12px;font-size:16px}
 .search::placeholder{color:#f3e6e0b0}
 .search{flex:1 1 100%}
@@ -65,7 +65,7 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
 <body>
 <header>
   <div class="bar">
-    <a class="brand" href="#index">Hymnbook</a>
+    <a class="brand" href="#index">Psalms, Hymns and Spiritual Songs</a>
     <input class="search" id="q" type="search" placeholder="Search by title, words or reference" aria-label="Search hymns">
   </div>
 </header>
