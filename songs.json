@@ -1651,6 +1651,16 @@
      "And mine elect shall long enjoy the works of their hands"
     ]
    }
+  ],
+  "charts": [
+   {
+    "kind": "sheet",
+    "label": "Sheet music (piano)",
+    "pages": [
+     "music/isaiah-65-sheet-music-1.png"
+    ],
+    "pdf": "music/isaiah-65-sheet-music.pdf"
+   }
   ]
  }
 ]
