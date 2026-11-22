@@ -1,13 +1,15 @@
-const CACHE = 'hymnbook-v29';
+const CACHE = 'hymnbook-v30';
 // Recordings live in their own cache so app updates don't throw away downloaded audio
 const AUDIO = 'hymnbook-audio';
+// Sheet music saved by "Save for offline" (or when first viewed) also survives app updates
+const MEDIA = 'hymnbook-media';
 const CORE = ['./', 'index.html', 'songs.json', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'icon-180.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)));
   self.skipWaiting();
 });
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== AUDIO).map(k => caches.delete(k)))));
+  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== AUDIO && k !== MEDIA).map(k => caches.delete(k)))));
   self.clients.claim();
 });
 
@@ -48,6 +50,10 @@ self.addEventListener('fetch', e => {
   if (url.origin !== location.origin) return;
   if (url.pathname.includes('/audio/')) { e.respondWith(audioResponse(req).catch(() => fetch(req))); return; }
   if (req.headers.has('range')) return;
+  if (url.pathname.includes('/music/')) {
+    e.respondWith(caches.match(req.url).then(hit => hit || fetch(req).then(res => { if (res.ok) { const copy = res.clone(); caches.open(MEDIA).then(c => c.put(req.url, copy)); } return res; })));
+    return;
+  }
   const fresh = req.mode === 'navigate' || /\.(html|json|js|webmanifest)$/.test(url.pathname) || url.pathname.endsWith('/');
   const save = res => { if (res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return res; };
   if (fresh) {
