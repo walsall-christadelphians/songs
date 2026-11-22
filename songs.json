@@ -149,6 +149,40 @@
      "Shoes for the gospel of peace"
     ]
    }
+  ],
+  "charts": [
+   {
+    "kind": "chords",
+    "label": "Chords",
+    "lines": [
+     {
+      "label": "Verse",
+      "lines": [
+       "Be [C]strong in the Lord",
+       "In the [F]strength of his [C]might",
+       "With the [Am]armour of God",
+       "You can [F]stand, you can [C]fight (×2)"
+      ]
+     },
+     {
+      "label": "Chorus",
+      "lines": [
+       "Put on the [Am]whole – whole – [F]armour of [C]God (×4)"
+      ]
+     },
+     {
+      "label": "Verse 2",
+      "lines": [
+       "[F]Wrap the belt of truth round",
+       "Hold the [C]shi-eld of faith",
+       "The [G]sword of the spirit",
+       "The [Am]helmet of sal-va-[F]tion",
+       "Put on your [C]breastplate of righteousness",
+       "[G]Shoes for the gospel of [G7]peace"
+      ]
+     }
+    ]
+   }
   ]
  },
  {
@@ -1309,6 +1343,7 @@
   "words": "Scripture",
   "music": "Richard Alleyne",
   "source": "Walsall Christadelphians",
+  "audio": "audio/the-word-of-god.mp3",
   "parts": [
    {
     "label": "",
@@ -1812,6 +1847,436 @@
      "Be ye doers of the word",
      "Not hearers only",
      "Deceiving yourselves"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "on-the-run",
+  "title": "On the run",
+  "ref": "Jonah 1:1–3",
+  "source": "Walsall Christadelphians – Jonah play",
+  "audio": "audio/on-the-run.mp3",
+  "parts": [
+   {
+    "label": "Verse 1",
+    "lines": [
+     "Oh the Ninevites – they’re so, so bad,",
+     "The things that they’ve done make me so, so mad.",
+     "So when God called me and said, “Go preach to them,”",
+     "I said, “I’d rather see them die than turn to God again.”"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "So I’ll run, run, run in the opposite way,",
+     "Yes, I’ll run, run, run for the rest of the day.",
+     "I’m gonna run, run, run, going out to sea,",
+     "I’m gonna run, run, run: God will never find me."
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "Oh, the problem is, God is loving and good;",
+     "He will forgive their sins, but I don’t think he should.",
+     "I just don’t want to know, don’t want to see God forgive:",
+     "Ninevites deserve to die, oh no, they don’t deserve to live!"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   }
+  ],
+  "charts": [
+   {
+    "kind": "chords",
+    "label": "Chords",
+    "lines": [
+     {
+      "label": "Verse 1",
+      "lines": [
+       "Oh the [Am]Ninevites – they’re so, so bad,",
+       "The [F]things that they’ve done make me so, so mad.",
+       "So when [C]God called me and said, “Go preach to them,”",
+       "I said, “I’d [G]rather see them die than turn to God again.”"
+      ]
+     },
+     {
+      "label": "Chorus",
+      "lines": [
+       "So I’ll [Am]run, run, run in the opposite [F]way,",
+       "Yes, I’ll [C]run, run, run for the rest of the [G]day.",
+       "I’m gonna [Am]run, run, run, going out to [F]sea,",
+       "I’m gonna [C]run, run, run: God will never find me."
+      ]
+     },
+     {
+      "label": "Verse 2",
+      "lines": [
+       "Oh, the [Am]problem is, God is loving and good;",
+       "He will [F]forgive their sins, but I don’t think he should.",
+       "I just [C]don’t want to know, don’t want to see God forgive:",
+       "Ninevites [G]deserve to die, oh no, they don’t deserve to live!"
+      ]
+     },
+     {
+      "label": "Chorus",
+      "repeat": true
+     }
+    ],
+    "note": "Jonah explains why he runs away. Song 1 of the Jonah play."
+   }
+  ]
+ },
+ {
+  "id": "down-down-down",
+  "title": "Down, down, down",
+  "ref": "Jonah 1:3–17",
+  "source": "Walsall Christadelphians – Jonah play",
+  "audio": "audio/down-down-down.mp3",
+  "parts": [
+   {
+    "label": "Chorus",
+    "lines": [
+     "I went down, down, down, down,",
+     "Down, down, down, down, down, down, down, down,",
+     "Down into the belly of a whale."
+    ]
+   },
+   {
+    "label": "Verse 1",
+    "lines": [
+     "Down into a boat,",
+     "Down into my sleep:",
+     "God, you won’t catch me,",
+     "I’m hiding in the deep.",
+     "Down in people’s estimations,",
+     "What a crazy situation!",
+     "Then I was thrown overboard:",
+     "Time to call upon the Lord."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "And I went down, down, down, down,",
+     "Down, down, down, down, down, down, down, down,",
+     "Down into the belly of a whale."
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "A fish then ate me up for dinner,",
+     "I think I’m going to die a sinner.",
+     "It’s really dark and really smelly,",
+     "Stuck inside this fish’s belly.",
+     "Seaweed wrapped around my head,",
+     "A fish’s bowels for my bed.",
+     "Shall I call out in my despair?",
+     "Will God still listen to my prayer?"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "Since I went down, down, down, down,",
+     "Down, down, down, down, down, down, down, down,",
+     "Down into the belly of a whale. (×2)"
+    ]
+   }
+  ],
+  "charts": [
+   {
+    "kind": "chords",
+    "label": "Chords",
+    "lines": [
+     {
+      "label": "Chorus",
+      "lines": [
+       "I went [Am]down, down, [E]down, down,",
+       "[Am]Down, down, [E]down, down, [Am]down, down, [E]down, down,",
+       "[Am]Down into [E]the [Am]belly of a [E]whale. [Am]"
+      ]
+     },
+     {
+      "label": "Verse 1",
+      "lines": [
+       "[Am]Down into a boat,",
+       "Down into my sleep:",
+       "[E]God, you won’t catch me,",
+       "I’m hiding in the deep.",
+       "[Am]Down in people’s estimations,",
+       "What a crazy situation!",
+       "[E]Then I was thrown overboard:",
+       "Time to call upon the Lord."
+      ]
+     },
+     {
+      "label": "Chorus",
+      "lines": [
+       "And I went [Am]down, down, [E]down, down,",
+       "[Am]Down, down, [E]down, down, [Am]down, down, [E]down, down,",
+       "[Am]Down into [E]the [Am]belly of a [E]whale. [Am]"
+      ]
+     },
+     {
+      "label": "Verse 2",
+      "lines": [
+       "[Am]A fish then ate me up for dinner,",
+       "I think I’m going to die a sinner.",
+       "[E]It’s really dark and really smelly,",
+       "Stuck inside this fish’s belly.",
+       "[Am]Seaweed wrapped around my head,",
+       "A fish’s bowels for my bed.",
+       "[E]Shall I call out in my despair?",
+       "Will God still listen to my prayer?"
+      ]
+     },
+     {
+      "label": "Chorus",
+      "lines": [
+       "Since I went [Am]down, down, [E]down, down,",
+       "[Am]Down, down, [E]down, down, [Am]down, down, [E]down, down,",
+       "[Am]Down into [E]the [Am]belly of a [E]whale. [Am] (×2)"
+      ]
+     }
+    ],
+    "note": "Intro: Am / E / Am / E. Keep swapping between Am and E through the “down, down” lines. Song 2 of the Jonah play."
+   }
+  ]
+ },
+ {
+  "id": "god-listens-to-our-prayers",
+  "title": "God listens to our prayers",
+  "note": "Call and answer: one or two people sing each line of the verses, then everyone sings it back. The “pray to him” parts are spoken rather than sung.",
+  "ref": "Jonah 2",
+  "source": "Walsall Christadelphians – Jonah play",
+  "audio": "audio/god-listens-to-our-prayers.mp3",
+  "parts": [
+   {
+    "label": "Verse 1",
+    "lines": [
+     "God listens to our prayers,",
+     "No matter what you’ve done,",
+     "No matter how deep you fall,",
+     "Don’t matter what’s going on."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "So pray to him, tell him what’s going on;",
+     "Pray to him when you’ve fallen on your bum;",
+     "Pray to him when life just ain’t no fun;",
+     "Pray to the Lord."
+    ]
+   },
+   {
+    "label": "Chorus 2",
+    "lines": [
+     "So pray to him, he will listen to your prayer;",
+     "Pray to him, he knows your every hair;",
+     "Pray to him, he really, really cares;",
+     "Pray to the Lord."
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "In a place that’s dark and smelly,",
+     "When you’re in a fish’s belly,",
+     "When it seems there’s no way out,",
+     "When you want to scream and shout,"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Chorus 2",
+    "repeat": true
+   }
+  ],
+  "charts": [
+   {
+    "kind": "chords",
+    "label": "Chords",
+    "lines": [
+     {
+      "label": "Verse 1",
+      "lines": [
+       "God [G]listens to our prayers,",
+       "No [D]matter what you’ve done,",
+       "No [Am]matter how deep you fall,",
+       "Don’t [D]matter what’s going on."
+      ]
+     },
+     {
+      "label": "Chorus",
+      "lines": [
+       "So [G]pray to him, tell him what’s going on;",
+       "[D]Pray to him when you’ve fallen on your bum;",
+       "[Am]Pray to him when life just ain’t no fun;",
+       "[D]Pray to the Lord."
+      ]
+     },
+     {
+      "label": "Chorus 2",
+      "lines": [
+       "So [G]pray to him, he will listen to your prayer;",
+       "[D]Pray to him, he knows your every hair;",
+       "[Am]Pray to him, he really, really cares;",
+       "[D]Pray to the Lord."
+      ]
+     },
+     {
+      "label": "Verse 2",
+      "lines": [
+       "In a [G]place that’s dark and smelly,",
+       "When you’re [D]in a fish’s belly,",
+       "When it [Am]seems there’s no way out,",
+       "When you [D]want to scream and shout,"
+      ]
+     },
+     {
+      "label": "Chorus",
+      "repeat": true
+     },
+     {
+      "label": "Chorus 2",
+      "repeat": true
+     }
+    ],
+    "note": "Song 3 of the Jonah play."
+   }
+  ]
+ },
+ {
+  "id": "goliath",
+  "title": "Goliath",
+  "ref": "1 Samuel 17",
+  "source": "Walsall Christadelphians",
+  "note": "Goliath sings this to taunt Israel, so the boys sing it; everyone joins in on the last line.",
+  "audio": "audio/goliath.mp3",
+  "parts": [
+   {
+    "label": "Verse 1",
+    "lines": [
+     "Oh, I’m strong, oh, I’m big,",
+     "You couldn’t beat me for a million quid!"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "I’m the champion of champions, I’m the greatest of all,",
+     "You’ll never beat me ’cos I’m nine foot tall! (×2)"
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "Bring someone to fight me – did you hear what I said?",
+     "Bring him right now and I’ll squish his head!",
+     "Oh, I’ll pull off his arms and I’ll crush his bones,",
+     "’Cos I’m stronger than iron and stone!"
+    ]
+   },
+   {
+    "label": "Verse 1",
+    "repeat": true
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "I’m the champion of champions, I’m the greatest of all,",
+     "You’ll never beat me ’cos I’m nine foot tall!",
+     "(Everyone) You’ll never beat him, we’ll never beat him, ’cos he’s nine foot tall!"
+    ]
+   }
+  ]
+ },
+ {
+  "id": "shake-a-little-salt",
+  "title": "Shake a little salt",
+  "ref": "Matthew 5:13–16",
+  "source": "Walsall Christadelphians",
+  "audio": "audio/shake-a-little-salt.mp3",
+  "parts": [
+   {
+    "label": "Chorus",
+    "lines": [
+     "You’ve got to shake a little salt, shine a little light,",
+     "Shake a little salt, shine a little light,",
+     "It’s you I’m living for. (×2)"
+    ]
+   },
+   {
+    "label": "Verse",
+    "lines": [
+     "So come on, shine your light,",
+     "Let them see the Father living in you",
+     "Every day, in all your ways. (×2)"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   }
+  ]
+ },
+ {
+  "id": "weddings",
+  "title": "Weddings",
+  "source": "Walsall Christadelphians",
+  "audio": "audio/weddings.mp3",
+  "parts": [
+   {
+    "label": "Verse 1",
+    "lines": [
+     "The day has come, the prep is done,",
+     "The time is near, the bride to appear. (×2)"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "It’s time, it’s time, all is now done;",
+     "It’s now, it’s now, so now just come. (×2)"
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "A beautiful bride, a smile really wide,",
+     "And into the room enters the groom. (×2)"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 3",
+    "lines": [
+     "The call, the call’s gone out, the guests give a shout,",
+     "And smiles abound, there’s joy all around."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Ending",
+    "lines": [
+     "The wedding begins, everyone sings:",
+     "Such a beautiful day, it’s here to stay. (×2)"
     ]
    }
   ]
