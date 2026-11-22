@@ -221,13 +221,14 @@
   ]
  },
  {
-  "id": "beatitudes-song",
-  "title": "Beatitudes Song",
+  "id": "beatitudes",
+  "title": "Beatitudes",
   "ref": "Matthew 5:1–13",
   "words": "Scripture",
   "music": "James Pearson & Ben Dwyer",
   "source": "Walsall 25+ Day 2019",
   "year": "2019",
+  "audio": "audio/beatitudes.mp3",
   "parts": [
    {
     "label": "Intro",
@@ -360,6 +361,26 @@
     ],
     "note": "Sing the chorus twice the first time and four times at the end. Bridge Dm: no third.",
     "pdf": "music/beatitudes-song-chords.pdf"
+   },
+   {
+    "kind": "sheet",
+    "label": "Sheet music",
+    "pages": [
+     "music/beatitudes-sheet-music-01.png",
+     "music/beatitudes-sheet-music-02.png",
+     "music/beatitudes-sheet-music-03.png",
+     "music/beatitudes-sheet-music-04.png",
+     "music/beatitudes-sheet-music-05.png",
+     "music/beatitudes-sheet-music-06.png",
+     "music/beatitudes-sheet-music-07.png",
+     "music/beatitudes-sheet-music-08.png",
+     "music/beatitudes-sheet-music-09.png",
+     "music/beatitudes-sheet-music-10.png",
+     "music/beatitudes-sheet-music-11.png",
+     "music/beatitudes-sheet-music-12.png",
+     "music/beatitudes-sheet-music-13.png"
+    ],
+    "pdf": "music/beatitudes-sheet-music.pdf"
    }
   ]
  },
