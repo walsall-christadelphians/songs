@@ -278,73 +278,78 @@
     "repeat": true
    }
   ],
-  "sheet": "music/beatitudes-song-chords.pdf",
-  "sheetLabel": "Chords",
-  "chordNote": "Sing the chorus twice the first time and four times at the end. Bridge Dm: no third.",
-  "chordSheet": [
+  "charts": [
    {
-    "label": "Intro",
+    "kind": "chords",
+    "label": "Chords",
     "lines": [
-     "[Dm]Blessed [Gdim/C#](blessed) [Dm7/C]blessed are [G7/B]you",
-     "[Dm]Blessed [Gdim/C#](blessed) [Dm7/C]blessed are [G7/B]you",
-     "[Dm]Blessed [Gdim/C#](blessed) [Dm7/C]blessed are [G7/B]you",
-     "[Bb]Blessed [Bb/C]  [F]"
-    ]
-   },
-   {
-    "label": "Verse 1",
-    "lines": [
-     "[Bb]Blessed are the [Gdim/C#]poor in [Dm9]spirit, [Dm/C]for [Gm]theirs is the [F]kingdom of [C/E]heav’n",
-     "[Bb]Blessed are [Gdim/C#]those who [Dm9]mourn, [Dm/C]for [Bb]they shall be [Bb/C]comfort[F]ed",
-     "[Bb]Blessed are the [Gdim/C#]meek, [Dm9]  [Dm/C]for [Gm]they shall in[F]herit the [C/E]earth",
-     "[Bb]And those [Gdim/C#]who thirst for [Dm9]righ[Dm/C]teousness, [Bb]they shall be [Bb/C]satisfied [F]  [A7]"
-    ]
-   },
-   {
-    "label": "Verse 2",
-    "lines": [
-     "[D]And those who show [Gm]mercy, for [C]they shall receive [F]mercy",
-     "And [Bb/D]blessed are the [F/C]pure, the pure [A7/C#]in [Dm]heart, for [Bb]they [G7/B]shall see [C]God.",
-     "[D]And those who show [Gm]mercy, for [C]they shall receive [F]mercy",
-     "And [Bb/D]blessed are the [F/C]pure, the pure [A7/C#]in [Dm]heart, for [Bb]they [G7/B]shall see [C]God."
-    ]
-   },
-   {
-    "label": "Chorus",
-    "lines": [
-     "[D]Rejoice and be [Gm]glad (rejoice, [C]rejoice)",
-     "Rejoice and be [F]glad (rejoice, [Bb]rejoice)",
-     "Rejoice and be [Eb]glad (rejoice, [A7]rejoice)",
-     "For [D]great is your re[D/F#]ward in heaven",
-     "Rejoice and be [Gm]glad (rejoice, [C]rejoice)",
-     "Rejoice and be [F]glad (rejoice, [Bb]rejoice)",
-     "Rejoice and be [Eb]glad (rejoice, [A7]rejoice)",
-     "And be glad"
-    ]
-   },
-   {
-    "label": "Interlude",
-    "lines": [
-     "[Dm]  [Gdim/C#]  [Dm7/C]  [G7/B]",
-     "[Bb]  [Bb/C]  [F]"
-    ]
-   },
-   {
-    "label": "Verse 3",
-    "lines": [
-     "[Bb]Blessed are the [Gdim/C#]peace[Dm9]makers, [Dm/C]for [Gm]they shall be [F]called [C/E]sons of God",
-     "[Bb]And those [Gdim/C#]who suffer for [Dm9]righ[Dm/C]teousness, [Bb]theirs is the [Bb/C]kingdom of [F]heav’n"
-    ]
-   },
-   {
-    "label": "Bridge",
-    "lines": [
-     "[Dm]Blessed are you when people [A7/C#]insult you, persecute you and [Db]falsely say all kinds of evil against you because [D]of me"
-    ]
-   },
-   {
-    "label": "Chorus",
-    "repeat": true
+     {
+      "label": "Intro",
+      "lines": [
+       "[Dm]Blessed [Gdim/C#](blessed) [Dm7/C]blessed are [G7/B]you",
+       "[Dm]Blessed [Gdim/C#](blessed) [Dm7/C]blessed are [G7/B]you",
+       "[Dm]Blessed [Gdim/C#](blessed) [Dm7/C]blessed are [G7/B]you",
+       "[Bb]Blessed [Bb/C]  [F]"
+      ]
+     },
+     {
+      "label": "Verse 1",
+      "lines": [
+       "[Bb]Blessed are the [Gdim/C#]poor in [Dm9]spirit, [Dm/C]for [Gm]theirs is the [F]kingdom of [C/E]heav’n",
+       "[Bb]Blessed are [Gdim/C#]those who [Dm9]mourn, [Dm/C]for [Bb]they shall be [Bb/C]comfort[F]ed",
+       "[Bb]Blessed are the [Gdim/C#]meek, [Dm9]  [Dm/C]for [Gm]they shall in[F]herit the [C/E]earth",
+       "[Bb]And those [Gdim/C#]who thirst for [Dm9]righ[Dm/C]teousness, [Bb]they shall be [Bb/C]satisfied [F]  [A7]"
+      ]
+     },
+     {
+      "label": "Verse 2",
+      "lines": [
+       "[D]And those who show [Gm]mercy, for [C]they shall receive [F]mercy",
+       "And [Bb/D]blessed are the [F/C]pure, the pure [A7/C#]in [Dm]heart, for [Bb]they [G7/B]shall see [C]God.",
+       "[D]And those who show [Gm]mercy, for [C]they shall receive [F]mercy",
+       "And [Bb/D]blessed are the [F/C]pure, the pure [A7/C#]in [Dm]heart, for [Bb]they [G7/B]shall see [C]God."
+      ]
+     },
+     {
+      "label": "Chorus",
+      "lines": [
+       "[D]Rejoice and be [Gm]glad (rejoice, [C]rejoice)",
+       "Rejoice and be [F]glad (rejoice, [Bb]rejoice)",
+       "Rejoice and be [Eb]glad (rejoice, [A7]rejoice)",
+       "For [D]great is your re[D/F#]ward in heaven",
+       "Rejoice and be [Gm]glad (rejoice, [C]rejoice)",
+       "Rejoice and be [F]glad (rejoice, [Bb]rejoice)",
+       "Rejoice and be [Eb]glad (rejoice, [A7]rejoice)",
+       "And be glad"
+      ]
+     },
+     {
+      "label": "Interlude",
+      "lines": [
+       "[Dm]  [Gdim/C#]  [Dm7/C]  [G7/B]",
+       "[Bb]  [Bb/C]  [F]"
+      ]
+     },
+     {
+      "label": "Verse 3",
+      "lines": [
+       "[Bb]Blessed are the [Gdim/C#]peace[Dm9]makers, [Dm/C]for [Gm]they shall be [F]called [C/E]sons of God",
+       "[Bb]And those [Gdim/C#]who suffer for [Dm9]righ[Dm/C]teousness, [Bb]theirs is the [Bb/C]kingdom of [F]heav’n"
+      ]
+     },
+     {
+      "label": "Bridge",
+      "lines": [
+       "[Dm]Blessed are you when people [A7/C#]insult you, persecute you and [Db]falsely say all kinds of evil against you because [D]of me"
+      ]
+     },
+     {
+      "label": "Chorus",
+      "repeat": true
+     }
+    ],
+    "note": "Sing the chorus twice the first time and four times at the end. Bridge Dm: no third.",
+    "pdf": "music/beatitudes-song-chords.pdf"
    }
   ]
  },
@@ -401,12 +406,17 @@
     ]
    }
   ],
-  "sheet": "music/colossians-1-sheet-music.pdf",
-  "sheetLabel": "Sheet music",
-  "sheetPages": [
-   "music/colossians-1-sheet-music-1.png",
-   "music/colossians-1-sheet-music-2.png",
-   "music/colossians-1-sheet-music-3.png"
+  "charts": [
+   {
+    "kind": "sheet",
+    "label": "Sheet music",
+    "pages": [
+     "music/colossians-1-sheet-music-1.png",
+     "music/colossians-1-sheet-music-2.png",
+     "music/colossians-1-sheet-music-3.png"
+    ],
+    "pdf": "music/colossians-1-sheet-music.pdf"
+   }
   ]
  },
  {
@@ -495,21 +505,26 @@
     "repeat": true
    }
   ],
-  "sheet": "music/we-are-chosen-we-are-loved-chords.pdf",
-  "sheetLabel": "Chords",
-  "sheetPages": [
-   "music/we-are-chosen-we-are-loved-chords-01.png",
-   "music/we-are-chosen-we-are-loved-chords-02.png",
-   "music/we-are-chosen-we-are-loved-chords-03.png",
-   "music/we-are-chosen-we-are-loved-chords-04.png",
-   "music/we-are-chosen-we-are-loved-chords-05.png",
-   "music/we-are-chosen-we-are-loved-chords-06.png",
-   "music/we-are-chosen-we-are-loved-chords-07.png",
-   "music/we-are-chosen-we-are-loved-chords-08.png",
-   "music/we-are-chosen-we-are-loved-chords-09.png",
-   "music/we-are-chosen-we-are-loved-chords-10.png",
-   "music/we-are-chosen-we-are-loved-chords-11.png",
-   "music/we-are-chosen-we-are-loved-chords-12.png"
+  "charts": [
+   {
+    "kind": "chords",
+    "label": "Chords",
+    "pages": [
+     "music/we-are-chosen-we-are-loved-chords-01.png",
+     "music/we-are-chosen-we-are-loved-chords-02.png",
+     "music/we-are-chosen-we-are-loved-chords-03.png",
+     "music/we-are-chosen-we-are-loved-chords-04.png",
+     "music/we-are-chosen-we-are-loved-chords-05.png",
+     "music/we-are-chosen-we-are-loved-chords-06.png",
+     "music/we-are-chosen-we-are-loved-chords-07.png",
+     "music/we-are-chosen-we-are-loved-chords-08.png",
+     "music/we-are-chosen-we-are-loved-chords-09.png",
+     "music/we-are-chosen-we-are-loved-chords-10.png",
+     "music/we-are-chosen-we-are-loved-chords-11.png",
+     "music/we-are-chosen-we-are-loved-chords-12.png"
+    ],
+    "pdf": "music/we-are-chosen-we-are-loved-chords.pdf"
+   }
   ]
  },
  {
@@ -719,13 +734,18 @@
     ]
    }
   ],
-  "sheet": "music/genesis-1-sheet-music.pdf",
-  "sheetLabel": "Sheet music",
-  "sheetPages": [
-   "music/genesis-1-sheet-music-1.png",
-   "music/genesis-1-sheet-music-2.png",
-   "music/genesis-1-sheet-music-3.png",
-   "music/genesis-1-sheet-music-4.png"
+  "charts": [
+   {
+    "kind": "sheet",
+    "label": "Sheet music",
+    "pages": [
+     "music/genesis-1-sheet-music-1.png",
+     "music/genesis-1-sheet-music-2.png",
+     "music/genesis-1-sheet-music-3.png",
+     "music/genesis-1-sheet-music-4.png"
+    ],
+    "pdf": "music/genesis-1-sheet-music.pdf"
+   }
   ]
  },
  {
@@ -908,14 +928,19 @@
     ]
    }
   ],
-  "sheet": "music/let-no-one-say-chords.pdf",
-  "sheetLabel": "Chords",
-  "sheetPages": [
-   "music/let-no-one-say-chords-1.png",
-   "music/let-no-one-say-chords-2.png",
-   "music/let-no-one-say-chords-3.png",
-   "music/let-no-one-say-chords-4.png",
-   "music/let-no-one-say-chords-5.png"
+  "charts": [
+   {
+    "kind": "chords",
+    "label": "Chords",
+    "pages": [
+     "music/let-no-one-say-chords-1.png",
+     "music/let-no-one-say-chords-2.png",
+     "music/let-no-one-say-chords-3.png",
+     "music/let-no-one-say-chords-4.png",
+     "music/let-no-one-say-chords-5.png"
+    ],
+    "pdf": "music/let-no-one-say-chords.pdf"
+   }
   ]
  },
  {
@@ -1047,10 +1072,15 @@
     ]
    }
   ],
-  "sheet": "music/psalm-69-sheet-music.pdf",
-  "sheetLabel": "Sheet music",
-  "sheetPages": [
-   "music/psalm-69-sheet-music-1.png"
+  "charts": [
+   {
+    "kind": "sheet",
+    "label": "Sheet music",
+    "pages": [
+     "music/psalm-69-sheet-music-1.png"
+    ],
+    "pdf": "music/psalm-69-sheet-music.pdf"
+   }
   ]
  },
  {
@@ -1122,12 +1152,17 @@
     ]
    }
   ],
-  "sheet": "music/strangers-and-pilgrims-sheet-music.pdf",
-  "sheetLabel": "Sheet music (tune and harmony)",
-  "sheetPages": [
-   "music/strangers-and-pilgrims-sheet-music-1.png",
-   "music/strangers-and-pilgrims-sheet-music-2.png",
-   "music/strangers-and-pilgrims-sheet-music-3.png"
+  "charts": [
+   {
+    "kind": "sheet",
+    "label": "Sheet music (tune and harmony)",
+    "pages": [
+     "music/strangers-and-pilgrims-sheet-music-1.png",
+     "music/strangers-and-pilgrims-sheet-music-2.png",
+     "music/strangers-and-pilgrims-sheet-music-3.png"
+    ],
+    "pdf": "music/strangers-and-pilgrims-sheet-music.pdf"
+   }
   ]
  },
  {
@@ -1364,57 +1399,62 @@
     "repeat": true
    }
   ],
-  "sheet": "music/ill-walk-by-faith-chords.pdf",
-  "sheetLabel": "Chords",
-  "chordNote": "Key of E · one chord per bar",
-  "chordSheet": [
+  "charts": [
    {
-    "label": "Verse 1",
+    "kind": "chords",
+    "label": "Chords",
     "lines": [
-     "[E]Elisha’s servant couldn’t see the [B]fire, till You [C#m]opened up his [A]eyes.",
-     "[E]The hills were filled with heaven’s [B]army, the [C#m]unseen by his [A]side."
-    ]
-   },
-   {
-    "label": "Pre-chorus",
-    "lines": [
-     "And [A]when I can’t see the [A]way ahead, I’ll trust the [A]words You’ve [A]said."
-    ]
-   },
-   {
-    "label": "Chorus",
-    "lines": [
-     "I’ll walk by [E]faith – won’t walk by [B]sight – Your word [C#m]lights my every [A]way –",
-     "when I can’t [E]see, still I [B]believe – You’re the [C#m]vision right in front of [A]me."
-    ]
-   },
-   {
-    "label": "Tag",
-    "lines": [
-     "[E]Woah – ah [B]ahh, ohh [C#m]ohhh, You’re the [A]vision right in front of me.",
-     "[E]Woah – ah [B]ahh, ohh [C#m]  [A]"
-    ]
-   },
-   {
-    "label": "Verse 2",
-    "lines": [
-     "[E]Like the blind men by the [B]roadside, You [C#m]healed their eyes to [A]see, and",
-     "[E]now I see the hope I’m [B]called to, [C#m]alive inside of [A]me."
-    ]
-   },
-   {
-    "label": "Bridge",
-    "lines": [
-     "Open my [A]eyes, open my eyes to see, [B]what’s real in heaven’s light,",
-     "faith is the [C#m]sight that leads me on – till all I [B]see is You alone."
-    ]
-   },
-   {
-    "label": "Chorus",
-    "lines": [
-     "I’ll walk by [E]faith – won’t walk by [B]sight – Your word [C#m]lights my every [A]way –",
-     "when I can’t [E]see, still I [B]believe – You’re the [C#m]vision right in front of [A]me."
-    ]
+     {
+      "label": "Verse 1",
+      "lines": [
+       "[E]Elisha’s servant couldn’t see the [B]fire, till You [C#m]opened up his [A]eyes.",
+       "[E]The hills were filled with heaven’s [B]army, the [C#m]unseen by his [A]side."
+      ]
+     },
+     {
+      "label": "Pre-chorus",
+      "lines": [
+       "And [A]when I can’t see the [A]way ahead, I’ll trust the [A]words You’ve [A]said."
+      ]
+     },
+     {
+      "label": "Chorus",
+      "lines": [
+       "I’ll walk by [E]faith – won’t walk by [B]sight – Your word [C#m]lights my every [A]way –",
+       "when I can’t [E]see, still I [B]believe – You’re the [C#m]vision right in front of [A]me."
+      ]
+     },
+     {
+      "label": "Tag",
+      "lines": [
+       "[E]Woah – ah [B]ahh, ohh [C#m]ohhh, You’re the [A]vision right in front of me.",
+       "[E]Woah – ah [B]ahh, ohh [C#m]  [A]"
+      ]
+     },
+     {
+      "label": "Verse 2",
+      "lines": [
+       "[E]Like the blind men by the [B]roadside, You [C#m]healed their eyes to [A]see, and",
+       "[E]now I see the hope I’m [B]called to, [C#m]alive inside of [A]me."
+      ]
+     },
+     {
+      "label": "Bridge",
+      "lines": [
+       "Open my [A]eyes, open my eyes to see, [B]what’s real in heaven’s light,",
+       "faith is the [C#m]sight that leads me on – till all I [B]see is You alone."
+      ]
+     },
+     {
+      "label": "Chorus",
+      "lines": [
+       "I’ll walk by [E]faith – won’t walk by [B]sight – Your word [C#m]lights my every [A]way –",
+       "when I can’t [E]see, still I [B]believe – You’re the [C#m]vision right in front of [A]me."
+      ]
+     }
+    ],
+    "note": "Key of E · one chord per bar",
+    "pdf": "music/ill-walk-by-faith-chords.pdf"
    }
   ]
  },
@@ -1522,65 +1562,70 @@
     ]
    }
   ],
-  "chordNote": "“-” means minor, e.g. A- = Am",
-  "chordSheet": [
+  "charts": [
    {
-    "label": "Verse 1",
+    "kind": "chords",
+    "label": "Chords",
     "lines": [
-     "To [C]Yahweh the [F]earth and her [C]fullness",
-     "The [C]world and the [F]dwellers in [G]her",
-     "For [C]he [C/E]upon the [F]seas he [G]foun[G/B]ded [C]her",
-     "And upon [F]rivers [G]he pre[C]pared her"
-    ]
-   },
-   {
-    "label": "Chorus",
-    "lines": [
-     "[C/E]Who will [F]go up [C/E]in the [D-]mountain of [G]Yah[C]weh?",
-     "[C/E]And who will [F]stand [C/E]in his [D-]holy [G]place?"
-    ]
-   },
-   {
-    "label": "Verse 2",
-    "lines": [
-     "[E]Innocent palms and a [A-]pure [C/G]heart",
-     "Which [F]has not lifted [G]up to vani[C]ty [G/B]his [A-]soul",
-     "And [F]not been [G]sworn to [C]deceit"
-    ]
-   },
-   {
-    "label": "Chorus",
-    "repeat": true
-   },
-   {
-    "label": "Verse 3",
-    "lines": [
-     "[E]He will lift up [A-]blessing from [C/G]Yahweh",
-     "And [F]righteous[G]ness from God [C]his [G/B]sav[A-]iour",
-     "This [F]generation [G]that seeks your [C]face"
-    ]
-   },
-   {
-    "label": "Bridge",
-    "lines": [
-     "[Eb]Lift up [Ab]gates your [Bb]heads (be lifted doors of ages)",
-     "[Eb]And he will [Ab]come, the [Bb]king of glory",
-     "[G]Who is he this king of [Ab]glory? [Eb/G]",
-     "[F-]Yah[Eb/G]weh [Ab]strong and [E/b]mighty",
-     "[F-]Yah[Eb/G]weh [Ab]mighty in [E/b]battle!"
-    ]
-   },
-   {
-    "label": "Final bridge",
-    "lines": [
-     "[Eb]Lift up [Ab]gates your [Bb]heads (be lifted doors of ages)",
-     "[Eb]And he will [Ab]come, the [Bb]king of glory",
-     "[G]Who is he this king of [Ab]glory? [Eb/G]",
-     "[F-]Yah[Eb/G]weh [Ab]of [Eb/G]hosts",
-     "[F-]He is the [Bb]king of [Eb]glory!"
-    ]
+     {
+      "label": "Verse 1",
+      "lines": [
+       "To [C]Yahweh the [F]earth and her [C]fullness",
+       "The [C]world and the [F]dwellers in [G]her",
+       "For [C]he [C/E]upon the [F]seas he [G]foun[G/B]ded [C]her",
+       "And upon [F]rivers [G]he pre[C]pared her"
+      ]
+     },
+     {
+      "label": "Chorus",
+      "lines": [
+       "[C/E]Who will [F]go up [C/E]in the [D-]mountain of [G]Yah[C]weh?",
+       "[C/E]And who will [F]stand [C/E]in his [D-]holy [G]place?"
+      ]
+     },
+     {
+      "label": "Verse 2",
+      "lines": [
+       "[E]Innocent palms and a [A-]pure [C/G]heart",
+       "Which [F]has not lifted [G]up to vani[C]ty [G/B]his [A-]soul",
+       "And [F]not been [G]sworn to [C]deceit"
+      ]
+     },
+     {
+      "label": "Chorus",
+      "repeat": true
+     },
+     {
+      "label": "Verse 3",
+      "lines": [
+       "[E]He will lift up [A-]blessing from [C/G]Yahweh",
+       "And [F]righteous[G]ness from God [C]his [G/B]sav[A-]iour",
+       "This [F]generation [G]that seeks your [C]face"
+      ]
+     },
+     {
+      "label": "Bridge",
+      "lines": [
+       "[Eb]Lift up [Ab]gates your [Bb]heads (be lifted doors of ages)",
+       "[Eb]And he will [Ab]come, the [Bb]king of glory",
+       "[G]Who is he this king of [Ab]glory? [Eb/G]",
+       "[F-]Yah[Eb/G]weh [Ab]strong and [E/b]mighty",
+       "[F-]Yah[Eb/G]weh [Ab]mighty in [E/b]battle!"
+      ]
+     },
+     {
+      "label": "Final bridge",
+      "lines": [
+       "[Eb]Lift up [Ab]gates your [Bb]heads (be lifted doors of ages)",
+       "[Eb]And he will [Ab]come, the [Bb]king of glory",
+       "[G]Who is he this king of [Ab]glory? [Eb/G]",
+       "[F-]Yah[Eb/G]weh [Ab]of [Eb/G]hosts",
+       "[F-]He is the [Bb]king of [Eb]glory!"
+      ]
+     }
+    ],
+    "note": "“-” means minor, e.g. A- = Am"
    }
-  ],
-  "sheetLabel": "Chords"
+  ]
  }
 ]
