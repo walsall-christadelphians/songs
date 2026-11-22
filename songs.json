@@ -459,7 +459,16 @@
   "music": "Richard & Esther",
   "source": "Walsall Christadelphians",
   "year": "2026",
-  "audio": "audio/we-are-chosen-we-are-loved.mp3",
+  "audio": [
+   {
+    "src": "audio/we-are-chosen-we-are-loved.mp3",
+    "label": "Recording 1"
+   },
+   {
+    "src": "audio/we-are-chosen-we-are-loved-2.mp3",
+    "label": "Recording 2"
+   }
+  ],
   "parts": [
    {
     "label": "Verse 1",
