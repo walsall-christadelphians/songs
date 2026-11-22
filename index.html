@@ -88,7 +88,7 @@ body.has-player main{padding-bottom:140px}
 .badge{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#fff}
 .badge svg{width:19px;height:19px}
 .list .badges{gap:4px;margin-inline-start:4px}
-.list a.badge{width:44px;height:44px;padding:0;flex:none;color:#fff}
+.list a.badge{display:grid;place-items:center;width:44px;height:44px;padding:0;flex:none;color:#fff}
 .list a.badge svg{width:24px;height:24px}
 .b-rec{background:light-dark(#e2563b,#f07a5f)}
 .b-chords{background:light-dark(#7a4fd6,#9c7bf0)}
@@ -217,7 +217,7 @@ function renderIndex(term = '') {
   const legend = `<p class="legend"><span><span class="badge b-rec" aria-hidden="true">${ICONS.play}</span>Play recording</span>${['chords', 'sheet'].map(k => `<span>${badge(k)}${KINDS[k]}</span>`).join('')}</p>`;
   listOrder = hits.filter(firstRec);
   view.innerHTML = hits.length
-    ? `<div class="list-actions">${offline.button()}</div>` + `<ul class="list">${hits.map(h => `<li data-id="${h.id}"><a href="#${h.id}"><span class="txt"><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span></a>${kinds(h).some(k => k !== 'rec') ? `<span class="badges">${kinds(h).filter(k => k !== 'rec').map(k => `<a class="badge b-${k}" href="#${h.id}/${k}" title="${KINDS[k]}" aria-label="${esc(h.title)}: ${KINDS[k]}">${ICONS[k]}</a>`).join('')}</span>` : ''}${firstRec(h) ? `<button class="playbtn" type="button" data-play="${h.id}" aria-label="Play ${esc(h.title)}">${ICONS.play}</button>` : ''}</li>`).join('')}</ul>` + legend
+    ? `<ul class="list">${hits.map(h => `<li data-id="${h.id}"><a href="#${h.id}"><span class="txt"><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span></a>${kinds(h).some(k => k !== 'rec') ? `<span class="badges">${kinds(h).filter(k => k !== 'rec').map(k => `<a class="badge b-${k}" href="#${h.id}/${k}" title="${KINDS[k]}" aria-label="${esc(h.title)}: ${KINDS[k]}">${ICONS[k]}</a>`).join('')}</span>` : ''}${firstRec(h) ? `<button class="playbtn" type="button" data-play="${h.id}" aria-label="Play ${esc(h.title)}">${ICONS.play}</button>` : ''}</li>`).join('')}</ul>` + legend
     : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
   offline.bind();
   const pa = document.getElementById('playall');
@@ -512,6 +512,8 @@ view.innerHTML = '<p class="empty">Loading…</p>';
 fetch('songs.json').then(r => r.json()).then(list => {
   HYMNS = list.sort((a, b) => a.title.localeCompare(b.title, 'en-GB'));
   route();
+  // In the installed app, quietly keep every recording and sheet music page saved for offline (only fetches what's new)
+  if (matchMedia('(display-mode: standalone)').matches || navigator.standalone === true) offline.run();
 }).catch(() => { view.innerHTML = '<p class="empty">Couldn’t load the songs. Check your connection and try again.</p>'; });
 
 
