@@ -193,7 +193,7 @@ setFs(fs);
 const text = h => (h.title + ' ' + (h.ref || '') + ' ' + h.parts.map(p => (p.lines || []).join(' ') + ' ' + (p.ref || '') + ' ' + (p.theme || '')).join(' ')).toLowerCase();
 const refs = h => h.ref || '';
 const isChorus = l => /chorus|refrain/i.test(l);
-const credits = h => [h.words && 'Words: ' + h.words, h.music && 'Music: ' + h.music, h.source, h.year && '© ' + h.year].filter(Boolean).join(' · ');
+const credits = h => [...(h.words && h.words === h.music ? ['Words and music: ' + h.words] : [h.words && 'Words: ' + h.words, h.music && 'Music: ' + h.music]), h.source, h.year && '© ' + h.year].filter(Boolean).join(' · ');
 
 const ICONS = {
   rec: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4.5" height="6.5" rx="1.5" fill="currentColor"/><rect x="16.5" y="14" width="4.5" height="6.5" rx="1.5" fill="currentColor"/></svg>',
