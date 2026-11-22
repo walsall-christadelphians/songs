@@ -1705,5 +1705,22 @@
     ]
    }
   ]
+ },
+ {
+  "id": "doers-of-the-word",
+  "title": "Doers of the word",
+  "ref": "James 1:22",
+  "words": "Scripture",
+  "audio": "audio/doers-of-the-word.mp3",
+  "parts": [
+   {
+    "label": "",
+    "lines": [
+     "Be ye doers of the word",
+     "Not hearers only",
+     "Deceiving yourselves"
+    ]
+   }
+  ]
  }
 ]
