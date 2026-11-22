@@ -7,7 +7,16 @@
   "music": "Richard Alleyne & Esther Mannell",
   "source": "Walsall Christadelphians",
   "year": "2026",
-  "audio": "audio/the-law-the-prophets-and-the-psalms.mp3",
+  "audio": [
+   {
+    "src": "audio/the-law-the-prophets-and-the-psalms.mp3",
+    "label": "Recording 1"
+   },
+   {
+    "src": "audio/the-law-the-prophets-and-the-psalms-2.mp3",
+    "label": "Recording 2"
+   }
+  ],
   "parts": [
    {
     "label": "Verse 1",

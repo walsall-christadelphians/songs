@@ -89,6 +89,7 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
 .label i{font-size:15px}
 .ref{color:var(--soft);font-size:13px;font-style:normal}
 .line{margin:0;padding-inline-start:1.4em;text-indent:-1.4em}
+.rec-label{margin:14px 0 -8px;font-size:14px;font-weight:600;color:var(--soft)}
 .player{display:block;width:100%;margin:14px 0 4px;height:44px}
 .chorus{padding-inline-start:1.4em;border-inline-start:3px solid var(--rule)}
 .chorus .line{font-style:italic}
@@ -196,7 +197,9 @@ function renderHymn(h) {
       ${lines.map(l => `<p class="line">${fmt(l)}</p>`).join('')}
     </section>`;
   }).join('');
-  const words = `${h.audio ? `<audio class="player" controls preload="none" src="${esc(h.audio)}"></audio>` : ''}
+  const recs = Array.isArray(h.audio) ? h.audio : h.audio ? [{ src: h.audio }] : [];
+  const players = recs.map((r, i) => `${recs.length > 1 ? `<p class="rec-label">${esc(r.label || 'Recording ' + (i + 1))}</p>` : ''}<audio class="player" controls preload="none" src="${esc(r.src)}"></audio>`).join('');
+  const words = `${players}
     <div class="tools">
       <button class="btn" id="smaller" aria-label="Smaller text">A−</button>
       <button class="btn" id="bigger" aria-label="Larger text">A+</button>
