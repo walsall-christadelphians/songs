@@ -47,8 +47,27 @@ dialog li{margin-bottom:8px}
 
 main{max-width:760px;margin:0 auto;padding:clamp(20px,4vw,44px) max(5vw,16px) 80px}
 .list{list-style:none;margin:0;padding:0}
-.list a{display:flex;align-items:center;gap:12px;padding:14px 4px;border-bottom:1px solid var(--rule);color:inherit;text-decoration:none}
+.list a{display:flex;align-items:center;gap:12px;padding:14px 4px;color:inherit;text-decoration:none}
 .list a:hover .t{color:var(--accent)}
+.list li{position:relative;display:flex;align-items:center;border-bottom:1px solid var(--rule)}
+.list li a{flex:1;border-bottom:0}
+.list li.now .t{color:var(--accent)}
+.playbtn{flex:none;display:grid;place-items:center;width:44px;height:44px;margin-inline-start:4px;border:0;border-radius:50%;background:light-dark(#e2563b,#f07a5f);color:#fff;cursor:pointer}
+.playbtn svg{width:20px;height:20px}
+.playall{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;margin:8px 0 6px;border:0;border-radius:22px;background:light-dark(#e2563b,#f07a5f);color:#fff;font-size:16px;font-weight:600;cursor:pointer}
+.playall svg{width:18px;height:18px}
+.nowplaying{position:fixed;left:0;right:0;bottom:0;z-index:3;background:var(--cover);color:var(--on);padding-bottom:env(safe-area-inset-bottom)}
+.nowplaying[hidden]{display:none}
+.np-track{height:6px;background:#ffffff30;cursor:pointer}
+.np-fill{height:100%;width:0;background:#fff}
+.np-row{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:4px;padding:6px max(4vw,10px)}
+.np-title{flex:1;color:var(--on);text-decoration:none;font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np-btn{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:none;color:var(--on);font-size:18px;cursor:pointer}
+.np-btn svg{width:24px;height:24px}
+.np-btn:disabled{opacity:.35;cursor:default}
+.np-play{background:#ffffff26}
+body.has-player main{padding-bottom:140px}
+
 .list .t{font:600 22px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .list .m{display:block;color:var(--soft);font-size:14px;margin-top:2px}
 .list .txt{flex:1}
@@ -111,6 +130,16 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
   </div>
 </header>
 <main id="view"></main>
+<div class="nowplaying" id="nowplaying" hidden>
+  <div class="np-track" role="presentation"><div class="np-fill"></div></div>
+  <div class="np-row">
+    <a class="np-title" href="#index"></a>
+    <button class="np-btn np-prev" type="button" aria-label="Previous"></button>
+    <button class="np-btn np-play" type="button" aria-label="Play"></button>
+    <button class="np-btn np-next" type="button" aria-label="Next"></button>
+    <button class="np-btn np-close" type="button" aria-label="Close player">✕</button>
+  </div>
+</div>
 <dialog id="install-help" aria-labelledby="install-title">
   <h2 id="install-title">Install the app</h2>
   <div id="install-steps"></div>
@@ -143,6 +172,12 @@ const ICONS = {
   chords: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 4h14M6 4v16M10 4v16M14 4v16M18 4v16M6 9h12M6 14h12"/><circle cx="10" cy="11.5" r="2" fill="currentColor" stroke="none"/><circle cx="14" cy="16.5" r="2" fill="currentColor" stroke="none"/></svg>',
   sheet: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 4.5 20 2v13.5a3 3 0 1 1-2-2.83V6.6l-7 1.6v9.3a3 3 0 1 1-2-2.83z"/></svg>'
 };
+ICONS.play = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>';
+ICONS.pause = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+ICONS.prev = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM19 6.2v11.6a1 1 0 0 1-1.6.8L9.5 13a1.2 1.2 0 0 1 0-2l7.9-5.6a1 1 0 0 1 1.6.8z"/></svg>';
+ICONS.next = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM5 6.2v11.6a1 1 0 0 0 1.6.8l7.9-5.6a1.2 1.2 0 0 0 0-2L6.6 5.4A1 1 0 0 0 5 6.2z"/></svg>';
+const firstRec = h => Array.isArray(h.audio) ? h.audio[0] && h.audio[0].src : h.audio;
+let listOrder = [];
 const KINDS = { rec: 'Recording', chords: 'Chords', sheet: 'Sheet music' };
 const badge = (k, size) => `<span class="badge b-${k}" title="${KINDS[k]}" role="img" aria-label="${KINDS[k]}">${ICONS[k]}</span>`;
 const kinds = h => [h.audio && 'rec', ...['chords', 'sheet'].filter(k => (h.charts || []).some(c => c.kind === k))].filter(Boolean);
@@ -150,10 +185,19 @@ const kinds = h => [h.audio && 'rec', ...['chords', 'sheet'].filter(k => (h.char
 function renderIndex(term = '') {
   const t = term.trim().toLowerCase();
   const hits = HYMNS.filter(h => !t || text(h).includes(t));
-  const legend = `<p class="legend">${Object.keys(KINDS).map(k => `<span>${badge(k)}${KINDS[k]}</span>`).join('')}</p>`;
+  const legend = `<p class="legend"><span><span class="badge b-rec" aria-hidden="true">${ICONS.play}</span>Play recording</span>${['chords', 'sheet'].map(k => `<span>${badge(k)}${KINDS[k]}</span>`).join('')}</p>`;
+  listOrder = hits.filter(firstRec);
   view.innerHTML = hits.length
-    ? legend + `<ul class="list">${hits.map(h => `<li><a href="#${h.id}"><span class="txt"><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span><span class="badges">${kinds(h).map(k => badge(k)).join('')}</span></a></li>`).join('')}</ul>`
+    ? legend + (hits.some(firstRec) ? `<button class="playall" id="playall" type="button">${ICONS.play} Play all</button>` : '') + `<ul class="list">${hits.map(h => `<li data-id="${h.id}"><a href="#${h.id}"><span class="txt"><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span><span class="badges">${kinds(h).filter(k => k !== 'rec').map(k => badge(k)).join('')}</span></a>${firstRec(h) ? `<button class="playbtn" type="button" data-play="${h.id}" aria-label="Play ${esc(h.title)}">${ICONS.play}</button>` : ''}</li>`).join('')}</ul>`
     : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
+  const pa = document.getElementById('playall');
+  if (pa) pa.onclick = () => player.playQueue(listOrder, 0);
+  view.querySelectorAll('[data-play]').forEach(b => b.onclick = () => {
+    const id = b.dataset.play;
+    if (player.current && player.current.id === id) player.toggle();
+    else player.playQueue(listOrder, listOrder.findIndex(h => h.id === id));
+  });
+  player.mark();
 }
 
 // "[E]Elisha’s servant [B]fire" → chord names sit above the word where they change
@@ -232,6 +276,78 @@ function renderHymn(h) {
   document.getElementById('bigger').onclick = () => setFs(fs + 2);
   window.scrollTo(0, 0);
 }
+
+// Playlist player: plays recordings one after another and keeps going while you browse
+const player = (() => {
+  const audio = new Audio();
+  audio.preload = 'auto';
+  const bar = document.getElementById('nowplaying');
+  bar.querySelector('.np-prev').innerHTML = ICONS.prev;
+  bar.querySelector('.np-next').innerHTML = ICONS.next;
+  const titleEl = bar.querySelector('.np-title');
+  const playBtn = bar.querySelector('.np-play');
+  const fill = bar.querySelector('.np-fill');
+  const seek = bar.querySelector('.np-track');
+  let queue = [], index = -1;
+  const api = {
+    get current() { return queue[index]; },
+    playQueue(q, i) { queue = q.slice(); load(i); },
+    toggle() { audio.paused ? audio.play() : audio.pause(); },
+    mark
+  };
+  function load(i) {
+    if (i < 0 || i >= queue.length) { stop(); return; }
+    index = i;
+    const h = queue[index];
+    audio.src = firstRec(h);
+    audio.play().catch(() => {});
+    titleEl.textContent = h.title;
+    titleEl.href = '#' + h.id;
+    bar.hidden = false;
+    document.body.classList.add('has-player');
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({ title: h.title, artist: 'Psalms, Hymns and Spiritual Songs', artwork: [{ src: 'icon-512.png', sizes: '512x512', type: 'image/png' }] });
+    }
+    mark();
+  }
+  function stop() { audio.pause(); index = -1; mark(); }
+  function mark() {
+    const id = api.current && api.current.id;
+    const playing = id && !audio.paused;
+    playBtn.innerHTML = playing ? ICONS.pause : ICONS.play;
+    playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    bar.querySelector('.np-prev').disabled = index <= 0;
+    bar.querySelector('.np-next').disabled = index < 0 || index >= queue.length - 1;
+    document.querySelectorAll('.list li').forEach(li => {
+      const on = li.dataset.id === id;
+      li.classList.toggle('now', on);
+      const b = li.querySelector('[data-play]');
+      if (b) { b.innerHTML = on && playing ? ICONS.pause : ICONS.play; b.setAttribute('aria-label', (on && playing ? 'Pause ' : 'Play ') + li.querySelector('.t').textContent); }
+    });
+  }
+  audio.addEventListener('play', mark);
+  audio.addEventListener('pause', mark);
+  audio.addEventListener('ended', () => load(index + 1));
+  audio.addEventListener('timeupdate', () => { fill.style.width = (audio.duration ? audio.currentTime / audio.duration * 100 : 0) + '%'; });
+  playBtn.onclick = () => { if (index < 0 && queue.length) load(0); else api.toggle(); };
+  bar.querySelector('.np-prev').onclick = () => { if (audio.currentTime > 3) audio.currentTime = 0; else load(index - 1); };
+  bar.querySelector('.np-next').onclick = () => load(index + 1);
+  bar.querySelector('.np-close').onclick = () => { stop(); bar.hidden = true; document.body.classList.remove('has-player'); };
+  seek.onclick = e => { if (audio.duration) { const r = seek.getBoundingClientRect(); audio.currentTime = (e.clientX - r.left) / r.width * audio.duration; } };
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.setActionHandler('play', () => audio.play());
+    navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+    navigator.mediaSession.setActionHandler('previoustrack', () => load(index - 1));
+    navigator.mediaSession.setActionHandler('nexttrack', () => load(index + 1));
+  }
+  // Only one thing plays at a time: a song page's own player pauses the playlist, and the other way round
+  document.addEventListener('play', e => {
+    document.querySelectorAll('audio').forEach(a => { if (a !== e.target) a.pause(); });
+    if (e.target !== audio) audio.pause();
+  }, true);
+  audio.addEventListener('play', () => document.querySelectorAll('audio').forEach(a => a.pause()));
+  return api;
+})();
 
 const headerEl = document.querySelector('header');
 const headerH = () => headerEl.offsetHeight;
