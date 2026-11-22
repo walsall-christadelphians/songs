@@ -144,6 +144,13 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
 .note{color:var(--soft);font-size:13px;margin-top:44px;border-top:1px solid var(--rule);padding-top:12px}
 .hymn-head .sub{padding-inline-start:42px}
 .title-row{display:flex;align-items:flex-start;gap:6px;margin-inline-start:-12px}
+.title-row h1{flex:1}
+.song-play{flex:none;display:flex;gap:8px;margin-inline-start:8px;margin-top:-4px}
+.song-play .rec{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;font-weight:600;color:var(--soft)}
+.song-play .playbtn{width:56px;height:56px;margin:0;box-shadow:0 2px 8px #0002}
+.song-play .playbtn svg{width:26px;height:26px}
+.tabs button{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 2px;white-space:nowrap;font-size:clamp(14px,4vw,17px)}
+.tabs .badge{flex:none;width:22px;height:22px}.tabs .badge svg{width:13px;height:13px}
 .back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;margin-top:-6px;border-radius:50%;color:var(--accent);text-decoration:none;font-size:34px;line-height:1}
 .back:hover{background:var(--rule)}
 </style>
@@ -275,15 +282,15 @@ function renderHymn(h, tab) {
     </section>`;
   }).join('');
   const recs = Array.isArray(h.audio) ? h.audio : h.audio ? [{ src: h.audio }] : [];
-  const players = recs.map((r, i) => `${recs.length > 1 ? `<p class="rec-label">${esc(r.label || 'Recording ' + (i + 1))}</p>` : ''}<div class="audiowrap"><audio class="player" controls preload="none" src="${esc(r.src)}"></audio></div>`).join('');
-  const words = `${players}
+  const playBtns = recs.length ? `<div class="song-play">${recs.map((r, i) => `<span class="rec"><button class="playbtn" type="button" data-song="${h.id}" data-rec="${esc(r.src)}" aria-label="Play ${esc(recs.length > 1 ? (r.label || 'Recording ' + (i + 1)) : h.title)}">${ICONS.play}</button>${recs.length > 1 ? (i + 1) : ''}</span>`).join('')}</div>` : '';
+  const words = `
     <div class="tools">
       <button class="btn" id="smaller" aria-label="Smaller text">A−</button>
       <button class="btn" id="bigger" aria-label="Larger text">A+</button>
     </div>
     ${parts}
     <footer class="note">${credits(h) ? `<p class="credits">${esc(credits(h))}</p>` : ''}<p>Words in brackets are echoes or directions.${h.note ? ' ' + esc(h.note) : ''}</p></footer>`;
-  const head = `<div class="hymn-head"><div class="title-row"><a class="back" href="#index" aria-label="All songs" title="All songs">←</a><h1>${esc(h.title)}</h1></div>${h.ref && h.ref !== h.title ? `<div class="sub">${esc(h.ref)}</div>` : ''}</div>`;
+  const head = `<div class="hymn-head"><div class="title-row"><a class="back" href="#index" aria-label="All songs" title="All songs">←</a><h1>${esc(h.title)}</h1>${playBtns}</div>${h.ref && h.ref !== h.title ? `<div class="sub">${esc(h.ref)}</div>` : ''}</div>`;
   const charts = h.charts || [];
   if (!charts.length) {
     view.innerHTML = head + words;
@@ -295,7 +302,7 @@ function renderHymn(h, tab) {
       : `${c.label !== KINDS[c.kind] ? `<p class="music-label">${esc(c.label)}</p>` : ''}
         ${c.pages.map((src, i) => `<div class="pagewrap is-loading"><img class="page" src="${esc(src)}" alt="${esc(c.label)}, page ${i + 1} of ${c.pages.length}" loading="lazy" onload="this.parentNode.classList.remove('is-loading')" onerror="this.parentNode.classList.replace('is-loading','is-error')"></div>`).join('')}
         ${c.pdf ? `<p class="note"><a href="${esc(c.pdf)}" target="_blank" rel="noopener">Open as PDF</a> to print or zoom in.</p>` : ''}`;
-    const names = ['Words', ...charts.map(c => KINDS[c.kind])];
+    const names = ['Words', ...charts.map(c => `<span class="badge b-${c.kind}" aria-hidden="true">${ICONS[c.kind]}</span>${KINDS[c.kind]}`)];
     const bodies = [words, ...charts.map(chartHtml)];
     view.innerHTML = head + `<div class="tabs" role="tablist" style="grid-template-columns:repeat(${names.length},1fr)">
         ${names.map((n, i) => `<button role="tab" id="tab-${i}" aria-controls="panel-${i}" aria-selected="${i === 0}"${i ? ' tabindex="-1"' : ''}>${n}</button>`).join('')}
@@ -306,6 +313,11 @@ function renderHymn(h, tab) {
     const start = charts.findIndex(c => c.kind === tab) + 1;
     setupTabs(start);
   }
+  view.querySelectorAll('[data-rec]').forEach(b => b.onclick = () => {
+    if (player.current && player.current.id === h.id && player.src === b.dataset.rec) player.toggle();
+    else { const all = HYMNS.filter(firstRec); player.playQueue(all, all.indexOf(h), b.dataset.rec); }
+  });
+  player.mark();
   document.getElementById('smaller').onclick = () => setFs(fs - 2);
   document.getElementById('bigger').onclick = () => setFs(fs + 2);
   window.scrollTo(0, 0);
@@ -395,16 +407,17 @@ const player = (() => {
   const seek = bar.querySelector('.np-track');
   let queue = [], index = -1, loading = false;
   const api = {
-    get current() { return queue[index]; },
-    playQueue(q, i) { queue = q.slice(); load(i); },
+    get current() { return queue[index] && queue[index].h; },
+    get src() { return queue[index] && queue[index].src; },
+    playQueue(q, i, src) { queue = q.map(h => ({ h, src: firstRec(h) })); if (src && queue[i]) queue[i].src = src; load(i); },
     toggle() { audio.paused ? audio.play() : audio.pause(); },
     mark
   };
   function load(i) {
     if (i < 0 || i >= queue.length) { stop(); return; }
     index = i;
-    const h = queue[index];
-    audio.src = firstRec(h);
+    const { h, src } = queue[index];
+    audio.src = src;
     loading = true;
     audio.play().catch(() => {});
     titleEl.textContent = h.title;
@@ -425,6 +438,11 @@ const player = (() => {
     playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
     bar.querySelector('.np-prev').disabled = index <= 0;
     bar.querySelector('.np-next').disabled = index < 0 || index >= queue.length - 1;
+    document.querySelectorAll('[data-rec]').forEach(b => {
+      const on = b.dataset.song === id && b.dataset.rec === api.src;
+      b.innerHTML = on && spin ? ICONS.spin : on && playing ? ICONS.pause : ICONS.play;
+      b.setAttribute('aria-label', b.getAttribute('aria-label').replace(/^(Play|Pause) /, on && playing ? 'Pause ' : 'Play '));
+    });
     document.querySelectorAll('.list li').forEach(li => {
       const on = li.dataset.id === id;
       li.classList.toggle('now', on);
