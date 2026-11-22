@@ -891,7 +891,16 @@
   "words": "Scripture",
   "music": "Richard Alleyne",
   "source": "Walsall Christadelphians",
-  "audio": "audio/let-no-one-say.mp3",
+  "audio": [
+   {
+    "src": "audio/let-no-one-say.mp3",
+    "label": "Recording 1"
+   },
+   {
+    "src": "audio/let-no-one-say-2.mp3",
+    "label": "Recording 2"
+   }
+  ],
   "parts": [
    {
     "label": "Verse 1",
@@ -1471,6 +1480,7 @@
   "words": "Richard Alleyne",
   "music": "Richard Alleyne",
   "source": "Walsall Christadelphians",
+  "audio": "audio/ye-men-of-galilee.mp3",
   "parts": [
    {
     "label": "Verse 1",
