@@ -1235,6 +1235,7 @@
   "words": "Walsall Christadelphians",
   "music": "Walsall Christadelphians",
   "source": "Walsall Christadelphians",
+  "audio": "audio/the-song-of-the-word.mp3",
   "parts": [
    {
     "label": "Verse 1",
@@ -1520,6 +1521,7 @@
   "title": "Psalm 24",
   "ref": "Psalm 24",
   "words": "Scripture",
+  "audio": "audio/psalm-24.mp3",
   "parts": [
    {
     "label": "Verse 1",

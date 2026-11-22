@@ -79,10 +79,13 @@ body.has-player main{padding-bottom:140px}
 .badges{display:flex;gap:6px;flex:none}
 .badge{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#fff}
 .badge svg{width:19px;height:19px}
+.list .badges{gap:4px;margin-inline-start:4px}
+.list a.badge{width:44px;height:44px;padding:0;flex:none;color:#fff}
+.list a.badge svg{width:24px;height:24px}
 .b-rec{background:light-dark(#e2563b,#f07a5f)}
 .b-chords{background:light-dark(#7a4fd6,#9c7bf0)}
 .b-sheet{background:light-dark(#d99a00,#f0b429)}
-.legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--soft);font-size:14px;margin:0 0 6px;padding:0 4px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--soft);font-size:14px;margin:18px 0 6px;padding:0 4px}
 .legend > span{display:inline-flex;align-items:center;gap:6px}
 .legend .badge{width:24px;height:24px}.legend .badge svg{width:14px;height:14px}
 .empty{color:var(--soft);padding:24px 4px}
@@ -201,7 +204,7 @@ function renderIndex(term = '') {
   const legend = `<p class="legend"><span><span class="badge b-rec" aria-hidden="true">${ICONS.play}</span>Play recording</span>${['chords', 'sheet'].map(k => `<span>${badge(k)}${KINDS[k]}</span>`).join('')}</p>`;
   listOrder = hits.filter(firstRec);
   view.innerHTML = hits.length
-    ? legend + `<div class="list-actions">${hits.some(firstRec) ? `<button class="playall" id="playall" type="button">${ICONS.play} Play all</button>` : ''}${offline.button()}</div>` + `<ul class="list">${hits.map(h => `<li data-id="${h.id}"><a href="#${h.id}"><span class="txt"><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span><span class="badges">${kinds(h).filter(k => k !== 'rec').map(k => badge(k)).join('')}</span></a>${firstRec(h) ? `<button class="playbtn" type="button" data-play="${h.id}" aria-label="Play ${esc(h.title)}">${ICONS.play}</button>` : ''}</li>`).join('')}</ul>`
+    ? `<div class="list-actions">${hits.some(firstRec) ? `<button class="playall" id="playall" type="button">${ICONS.play} Play all</button>` : ''}${offline.button()}</div>` + `<ul class="list">${hits.map(h => `<li data-id="${h.id}"><a href="#${h.id}"><span class="txt"><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span></a>${kinds(h).some(k => k !== 'rec') ? `<span class="badges">${kinds(h).filter(k => k !== 'rec').map(k => `<a class="badge b-${k}" href="#${h.id}/${k}" title="${KINDS[k]}" aria-label="${esc(h.title)}: ${KINDS[k]}">${ICONS[k]}</a>`).join('')}</span>` : ''}${firstRec(h) ? `<button class="playbtn" type="button" data-play="${h.id}" aria-label="Play ${esc(h.title)}">${ICONS.play}</button>` : ''}</li>`).join('')}</ul>` + legend
     : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
   offline.bind();
   const pa = document.getElementById('playall');
@@ -246,7 +249,7 @@ function chordLine(line) {
   return `<p class="cline">${html}</p>`;
 }
 
-function renderHymn(h) {
+function renderHymn(h, tab) {
   const parts = h.parts.map(p => {
     const src = p.repeat ? h.parts.find(x => x.label === p.label && x.lines) : p;
     const lines = src.lines;
@@ -284,7 +287,8 @@ function renderHymn(h) {
       <div class="pager" id="pager">
         ${bodies.map((body, i) => `<section class="panel" id="panel-${i}" role="tabpanel" aria-labelledby="tab-${i}">${body}</section>`).join('')}
       </div>`;
-    setupTabs();
+    const start = charts.findIndex(c => c.kind === tab) + 1;
+    setupTabs(start);
   }
   document.getElementById('smaller').onclick = () => setFs(fs - 2);
   document.getElementById('bigger').onclick = () => setFs(fs + 2);
@@ -350,6 +354,7 @@ const offline = (() => {
     paint();
   }
   return {
+    run,
     button() { return ok ? `<button class="save-offline" id="save-offline" type="button">${label()}</button>` : ''; },
     async bind() {
       const b = document.getElementById('save-offline');
@@ -437,7 +442,7 @@ const headerEl = document.querySelector('header');
 const headerH = () => headerEl.offsetHeight;
 new ResizeObserver(() => document.documentElement.style.setProperty('--hh', headerH() + 'px')).observe(headerEl);
 let pagerObserver;
-function setupTabs() {
+function setupTabs(start = 0) {
   const pager = document.getElementById('pager');
   const panels = [...pager.children];
   const tabs = [...document.querySelectorAll('.tabs [role=tab]')];
@@ -466,15 +471,16 @@ function setupTabs() {
   panels.forEach(p => pagerObserver.observe(p));
   panels.forEach((p, j) => p.inert = j !== 0);
   fit();
+  if (start) { pager.scrollLeft = start * pager.clientWidth; select(start, false); }
 }
 
 function route() {
-  const id = location.hash.slice(1);
+  const [id, tab] = location.hash.slice(1).split('/');
   const h = id && HYMNS.find(x => x.id === id);
-  if (h) { q.value = ''; renderHymn(h); } else renderIndex(q.value);
+  if (h) { q.value = ''; renderHymn(h, tab); } else renderIndex(q.value);
 }
 
-q.addEventListener('input', () => { if (HYMNS.some(x => '#' + x.id === location.hash)) location.hash = 'index'; renderIndex(q.value); });
+q.addEventListener('input', () => { if (HYMNS.some(x => location.hash.slice(1).split('/')[0] === x.id)) location.hash = 'index'; renderIndex(q.value); });
 addEventListener('hashchange', route);
 view.innerHTML = '<p class="empty">Loading…</p>';
 fetch('songs.json').then(r => r.json()).then(list => {
@@ -504,6 +510,8 @@ fetch('songs.json').then(r => r.json()).then(list => {
     btn.hidden = false;
     addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; });
     btn.addEventListener('click', async () => {
+      // Installing also saves every recording and sheet music page, so the app works offline straight away
+      if (HYMNS.length) offline.run();
       if (deferred) {
         deferred.prompt();
         const { outcome } = await deferred.userChoice;
