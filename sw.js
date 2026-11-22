@@ -1,4 +1,4 @@
-const CACHE = 'hymnbook-v26';
+const CACHE = 'hymnbook-v27';
 // Recordings live in their own cache so app updates don't throw away downloaded audio
 const AUDIO = 'hymnbook-audio';
 const CORE = ['./', 'index.html', 'songs.json', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'icon-180.png'];

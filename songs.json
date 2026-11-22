@@ -1004,6 +1004,7 @@
   "music": "James Pearson & Ben Dwyer",
   "source": "Walsall 25+ Day 2020",
   "year": "2020",
+  "audio": "audio/psalm-69.mp3",
   "parts": [
    {
     "label": "Verse 1",
@@ -1661,6 +1662,7 @@
   "title": "Jonah 2",
   "ref": "Jonah 2:2–7",
   "words": "Scripture",
+  "audio": "audio/jonah-2.mp3",
   "parts": [
    {
     "label": "Verse 1",
