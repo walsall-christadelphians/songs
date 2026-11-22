@@ -1627,5 +1627,30 @@
     "note": "“-” means minor, e.g. A- = Am"
    }
   ]
+ },
+ {
+  "id": "isaiah-65-21-22",
+  "title": "Isaiah 65:21–22",
+  "ref": "Isaiah 65:21–22",
+  "words": "Scripture",
+  "audio": "audio/isaiah-65.mp3",
+  "parts": [
+   {
+    "label": "",
+    "lines": [
+     "And they shall build houses and inhabit them",
+     "And they shall plant vineyards and eat their fruit",
+     "They shall not build and another inhabit",
+     "They shall not plant and another eat"
+    ]
+   },
+   {
+    "label": "",
+    "lines": [
+     "For as the days of a tree are the days of my people",
+     "And mine elect shall long enjoy the works of their hands"
+    ]
+   }
+  ]
  }
 ]
