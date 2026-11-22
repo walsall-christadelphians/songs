@@ -99,6 +99,14 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
 .chords-part{margin-top:22px}
 .glue{display:inline-flex;white-space:nowrap}
 .music-label{color:var(--accent);font-weight:600;font-size:15px;margin:18px 0 10px}
+.pagewrap{position:relative;margin:0 0 12px}
+.pagewrap .page{margin:0}
+.pagewrap.is-loading,.pagewrap.is-error{aspect-ratio:210/297;background:var(--rule);border-radius:6px}
+.pagewrap.is-loading .page,.pagewrap.is-error .page{opacity:0;position:absolute;inset:0;height:100%}
+.pagewrap.is-loading::after{content:'';position:absolute;top:50%;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border:4px solid light-dark(#fff,#2e3a39);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+.pagewrap.is-error::after{content:'Couldn’t load this page. Check your connection and try again.';position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--soft);font-size:15px}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.pagewrap.is-loading::after{animation-duration:2.4s}}
 .page{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--rule);border-radius:6px;margin:0 0 12px}
 .note a{color:var(--accent)}
 .sheet{display:inline-flex;align-items:center;text-decoration:none;margin-inline-end:auto;color:var(--accent)!important;font-size:15px}
@@ -260,7 +268,7 @@ function renderHymn(h) {
         ${c.lines.map(p => `<section class="part chords-part"><div class="label"><b>${esc(p.label)}</b></div>${(p.repeat ? c.lines.find(x => x.label === p.label && x.lines) : p).lines.map(chordLine).join('')}</section>`).join('')}
         ${c.pdf ? `<p class="note"><a href="${esc(c.pdf)}" target="_blank" rel="noopener">Original chord chart (PDF)</a></p>` : ''}`
       : `${c.label !== KINDS[c.kind] ? `<p class="music-label">${esc(c.label)}</p>` : ''}
-        ${c.pages.map((src, i) => `<img class="page" src="${esc(src)}" alt="${esc(c.label)}, page ${i + 1} of ${c.pages.length}" loading="lazy">`).join('')}
+        ${c.pages.map((src, i) => `<div class="pagewrap is-loading"><img class="page" src="${esc(src)}" alt="${esc(c.label)}, page ${i + 1} of ${c.pages.length}" loading="lazy" onload="this.parentNode.classList.remove('is-loading')" onerror="this.parentNode.classList.replace('is-loading','is-error')"></div>`).join('')}
         ${c.pdf ? `<p class="note"><a href="${esc(c.pdf)}" target="_blank" rel="noopener">Open as PDF</a> to print or zoom in.</p>` : ''}`;
     const names = ['Words', ...charts.map(c => KINDS[c.kind])];
     const bodies = [words, ...charts.map(chartHtml)];
