@@ -34,8 +34,12 @@ header{background:var(--cover);color:var(--on);padding:14px max(5vw,16px) 18px;p
 .bar:has(.playall:not([hidden])) .brand{grid-area:brand}
 .bar:has(.playall:not([hidden])) .search{grid-area:search;min-width:0}
 .bar:has(.playall:not([hidden])) .install{grid-area:install}
-.bar .playall{grid-area:play;align-self:center;width:92px;height:92px;padding:0;justify-content:center;border-radius:50%;margin-inline-start:4px}
+.bar .playall{grid-area:play;align-self:center;width:92px;height:92px;padding:0;justify-content:center;border-radius:50%;margin-inline-start:16px}
 .bar .playall svg{width:44%;height:44%;margin:0;transform:translateX(-5%)}
+/* Shuffle sits on the lower-left edge of the big play button */
+.bar .shuffle{grid-area:play;justify-self:start;align-self:end;position:relative;z-index:1;width:44px;height:44px;margin:0 0 -6px -2px;padding:0;display:grid;place-items:center;border:3px solid var(--cover);border-radius:50%;background:#fff;color:light-dark(#e2563b,#c94a31);cursor:pointer;box-shadow:0 2px 6px #0003}
+.bar .shuffle svg{width:22px;height:22px}
+.bar .shuffle[hidden]{display:none}
 .brand{flex:1 1 100%;font:600 clamp(19px,4.5vw,26px)/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--on);text-decoration:none;margin-inline-end:auto;letter-spacing:.01em}
 .search{height:44px;border-radius:10px;border:1px solid #ffffff40;background:#ffffff18;color:var(--on);padding:0 12px;font-size:16px}
 .search::placeholder{color:#f3e6e0b0}
@@ -161,7 +165,8 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
   <div class="bar">
     <a class="brand" href="#index">Psalms, Hymns and Spiritual Songs</a>
     <button class="playall" id="playall" type="button" aria-label="Play all" title="Play all" hidden></button>
-    <input class="search" id="q" type="search" placeholder="Search songs" aria-label="Search hymns">
+    <button class="shuffle" id="shuffle" type="button" aria-label="Shuffle and play" title="Shuffle" hidden></button>
+    <input class="search" id="q" type="search" placeholder="Search" aria-label="Search hymns">
     <button class="btn install" id="install" type="button" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>Install</button>
   </div>
 </header>
@@ -209,6 +214,7 @@ const ICONS = {
   sheet: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 4.5 20 2v13.5a3 3 0 1 1-2-2.83V6.6l-7 1.6v9.3a3 3 0 1 1-2-2.83z"/></svg>'
 };
 ICONS.play = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>';
+ICONS.shuffle = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.59 9.17 5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>';
 ICONS.spin = '<span class="spin" role="img" aria-label="Loading"></span>';
 ICONS.pause = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
 ICONS.prev = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM19 6.2v11.6a1 1 0 0 1-1.6.8L9.5 13a1.2 1.2 0 0 1 0-2l7.9-5.6a1 1 0 0 1 1.6.8z"/></svg>';
@@ -232,6 +238,14 @@ function renderIndex(term = '') {
   pa.innerHTML = ICONS.play;
   pa.hidden = !listOrder.length;
   pa.onclick = () => player.playQueue(listOrder, 0);
+  const sh = document.getElementById('shuffle');
+  sh.innerHTML = ICONS.shuffle;
+  sh.hidden = listOrder.length < 2;
+  sh.onclick = () => {
+    const q = listOrder.slice();
+    for (let i = q.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [q[i], q[j]] = [q[j], q[i]]; }
+    player.playQueue(q, 0);
+  };
   view.querySelectorAll('[data-play]').forEach(b => b.onclick = () => {
     const id = b.dataset.play;
     if (player.current && player.current.id === id) player.toggle();
@@ -274,6 +288,7 @@ function chordLine(line) {
 
 function renderHymn(h, tab) {
   document.getElementById('playall').hidden = true;
+  document.getElementById('shuffle').hidden = true;
   const parts = h.parts.map(p => {
     const src = p.repeat ? h.parts.find(x => x.label === p.label && x.lines) : p;
     const lines = src.lines;
