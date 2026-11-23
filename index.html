@@ -519,10 +519,21 @@ function setupTabs(start = 0) {
   if (start) { pager.scrollLeft = start * pager.clientWidth; select(start, false); }
 }
 
+// Remember where you were in the list (and any search) so going back returns you there
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+let onIndex = true, listY = 0, listTerm = '';
+// Note the list position at the moment of the tap, before the page changes
+addEventListener('click', e => { if (onIndex && e.target.closest('.list a')) listY = window.scrollY; }, true);
 function route() {
   const [id, tab] = location.hash.slice(1).split('/');
   const h = id && HYMNS.find(x => x.id === id);
-  if (h) { q.value = ''; renderHymn(h, tab); } else renderIndex(q.value);
+  if (h) {
+    if (onIndex) listTerm = q.value;
+    onIndex = false; q.value = ''; renderHymn(h, tab);
+  } else if (!onIndex) {
+    onIndex = true; q.value = listTerm; renderIndex(listTerm);
+    window.scrollTo(0, listY);
+  } else renderIndex(q.value);
 }
 
 q.addEventListener('input', () => { if (HYMNS.some(x => location.hash.slice(1).split('/')[0] === x.id)) location.hash = 'index'; renderIndex(q.value); });
