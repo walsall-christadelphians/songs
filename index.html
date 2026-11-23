@@ -34,12 +34,8 @@ header{background:var(--cover);color:var(--on);padding:14px max(5vw,16px) 18px;p
 .bar:has(.playall:not([hidden])) .brand{grid-area:brand}
 .bar:has(.playall:not([hidden])) .search{grid-area:search;min-width:0}
 .bar:has(.playall:not([hidden])) .install{grid-area:install}
-.bar .playall{grid-area:play;align-self:center;width:92px;height:92px;padding:0;justify-content:center;border-radius:50%;margin-inline-start:16px}
+.bar .playall{grid-area:play;align-self:center;width:92px;height:92px;padding:0;justify-content:center;border-radius:50%;margin-inline-start:4px}
 .bar .playall svg{width:44%;height:44%;margin:0;transform:translateX(-5%)}
-/* Shuffle sits on the lower-left edge of the big play button */
-.bar .shuffle{grid-area:play;justify-self:start;align-self:end;position:relative;z-index:1;width:44px;height:44px;margin:0 0 -6px -2px;padding:0;display:grid;place-items:center;border:3px solid var(--cover);border-radius:50%;background:#fff;color:light-dark(#e2563b,#c94a31);cursor:pointer;box-shadow:0 2px 6px #0003}
-.bar .shuffle svg{width:22px;height:22px}
-.bar .shuffle[hidden]{display:none}
 .brand{flex:1 1 100%;font:600 clamp(19px,4.5vw,26px)/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--on);text-decoration:none;margin-inline-end:auto;letter-spacing:.01em}
 .search{height:44px;border-radius:10px;border:1px solid #ffffff40;background:#ffffff18;color:var(--on);padding:0 12px;font-size:16px}
 .search::placeholder{color:#f3e6e0b0}
@@ -84,6 +80,10 @@ main{max-width:760px;margin:0 auto;padding:clamp(20px,4vw,44px) max(5vw,16px) 80
 .np-btn svg{width:24px;height:24px}
 .np-btn:disabled{opacity:.35;cursor:default}
 .np-play{background:#ffffff26}
+.np-shuffle{position:relative;opacity:.55}
+.np-shuffle svg{width:21px;height:21px}
+.np-shuffle[aria-pressed="true"]{opacity:1}
+.np-shuffle[aria-pressed="true"]::after{content:'';position:absolute;bottom:4px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:currentColor}
 body.has-player main{padding-bottom:140px}
 
 .list .t{font:600 22px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
@@ -165,7 +165,6 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
   <div class="bar">
     <a class="brand" href="#index">Psalms, Hymns and Spiritual Songs</a>
     <button class="playall" id="playall" type="button" aria-label="Play all" title="Play all" hidden></button>
-    <button class="shuffle" id="shuffle" type="button" aria-label="Shuffle and play" title="Shuffle" hidden></button>
     <input class="search" id="q" type="search" placeholder="Search" aria-label="Search hymns">
     <button class="btn install" id="install" type="button" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>Install</button>
   </div>
@@ -175,6 +174,7 @@ h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,
   <div class="np-track" role="presentation"><div class="np-fill"></div></div>
   <div class="np-row">
     <a class="np-title" href="#index"></a>
+    <button class="np-btn np-shuffle" type="button" aria-label="Shuffle" aria-pressed="false" title="Shuffle"></button>
     <button class="np-btn np-prev" type="button" aria-label="Previous"></button>
     <button class="np-btn np-play" type="button" aria-label="Play"></button>
     <button class="np-btn np-next" type="button" aria-label="Next"></button>
@@ -237,15 +237,7 @@ function renderIndex(term = '') {
   const pa = document.getElementById('playall');
   pa.innerHTML = ICONS.play;
   pa.hidden = !listOrder.length;
-  pa.onclick = () => player.playQueue(listOrder, 0);
-  const sh = document.getElementById('shuffle');
-  sh.innerHTML = ICONS.shuffle;
-  sh.hidden = listOrder.length < 2;
-  sh.onclick = () => {
-    const q = listOrder.slice();
-    for (let i = q.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [q[i], q[j]] = [q[j], q[i]]; }
-    player.playQueue(q, 0);
-  };
+  pa.onclick = () => player.playQueue(listOrder, player.shuffled ? Math.floor(Math.random() * listOrder.length) : 0);
   view.querySelectorAll('[data-play]').forEach(b => b.onclick = () => {
     const id = b.dataset.play;
     if (player.current && player.current.id === id) player.toggle();
@@ -288,7 +280,6 @@ function chordLine(line) {
 
 function renderHymn(h, tab) {
   document.getElementById('playall').hidden = true;
-  document.getElementById('shuffle').hidden = true;
   const parts = h.parts.map(p => {
     const src = p.repeat ? h.parts.find(x => x.label === p.label && x.lines) : p;
     const lines = src.lines;
@@ -421,11 +412,35 @@ const player = (() => {
   const playBtn = bar.querySelector('.np-play');
   const fill = bar.querySelector('.np-fill');
   const seek = bar.querySelector('.np-track');
-  let queue = [], index = -1, loading = false;
+  let queue = [], order = [], index = -1, loading = false;
+  // Shuffle: the current song stays, everything else plays in a random order. Remembered between visits.
+  const shuffleBtn = bar.querySelector('.np-shuffle');
+  shuffleBtn.innerHTML = ICONS.shuffle;
+  let shuffled = false;
+  try { shuffled = localStorage.getItem('shuffle') === '1'; } catch (e) {}
+  const mixed = list => { const q = list.slice(); for (let i = q.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [q[i], q[j]] = [q[j], q[i]]; } return q; };
+  function setShuffle(on) {
+    shuffled = on;
+    try { localStorage.setItem('shuffle', on ? '1' : '0'); } catch (e) {}
+    const cur = queue[index];
+    if (cur) {
+      queue = on ? [cur, ...mixed(order.filter(x => x !== cur))] : order.slice();
+      index = queue.indexOf(cur);
+    }
+    mark();
+  }
+  shuffleBtn.onclick = () => setShuffle(!shuffled);
   const api = {
     get current() { return queue[index] && queue[index].h; },
     get src() { return queue[index] && queue[index].src; },
-    playQueue(q, i, src) { queue = q.map(h => ({ h, src: firstRec(h) })); if (src && queue[i]) queue[i].src = src; load(i); },
+    get shuffled() { return shuffled; },
+    playQueue(q, i, src) {
+      order = q.map(h => ({ h, src: firstRec(h) }));
+      if (src && order[i]) order[i].src = src;
+      const pick = order[i];
+      queue = shuffled && pick ? [pick, ...mixed(order.filter(x => x !== pick))] : order.slice();
+      load(queue.indexOf(pick));
+    },
     toggle() { audio.paused ? audio.play() : audio.pause(); },
     mark
   };
@@ -452,6 +467,8 @@ const player = (() => {
     const spin = playing && loading;
     playBtn.innerHTML = spin ? ICONS.spin : playing ? ICONS.pause : ICONS.play;
     playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    shuffleBtn.setAttribute('aria-pressed', shuffled);
+    shuffleBtn.setAttribute('aria-label', shuffled ? 'Shuffle is on' : 'Shuffle is off');
     bar.querySelector('.np-prev').disabled = index <= 0;
     bar.querySelector('.np-next').disabled = index < 0 || index >= queue.length - 1;
     document.querySelectorAll('[data-rec]').forEach(b => {
