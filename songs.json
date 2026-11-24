@@ -995,7 +995,8 @@
     ],
     "pdf": "music/let-no-one-say-chords.pdf"
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "go-and-do-likewise",
@@ -1343,18 +1344,18 @@
   ]
  },
  {
-  "id": "the-word-of-god",
-  "title": "The word of God",
+  "id": "the-word-of-the-lord",
+  "title": "The word of the LORD",
   "ref": "Hebrews 4:12; Colossians 3:16",
   "words": "Scripture",
   "music": "Richard Alleyne",
   "source": "Walsall Christadelphians",
-  "audio": "audio/the-word-of-god.mp3",
+  "audio": "audio/the-word-of-the-lord.mp3",
   "parts": [
    {
     "label": "",
     "lines": [
-     "The word of God is living and active",
+     "The word of the LORD is living and active",
      "It’s living in me (×4)",
      "Sharper than a sword",
      "It’s living in me (×4)",
