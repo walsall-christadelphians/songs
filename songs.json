@@ -105,7 +105,8 @@
      "For those who will inherit salvation"
     ]
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "put-on-the-whole-armour-of-god",
@@ -183,7 +184,8 @@
      }
     ]
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "as-for-me-and-my-house",
@@ -732,7 +734,8 @@
      "and he sha-ared it with tho-ose that he lo-oved"
     ]
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "genesis-1",
@@ -919,7 +922,8 @@
      "Then they will bear much fruit”"
     ]
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "let-no-one-say",
@@ -1263,7 +1267,8 @@
     "label": "Chorus",
     "repeat": true
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "the-song-of-the-word",
@@ -1356,7 +1361,8 @@
      "Living in me (×4)"
     ]
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "trust-in-the-lord",
@@ -1393,7 +1399,8 @@
     "label": "Chorus",
     "repeat": true
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "ill-walk-by-faith",
@@ -1552,7 +1559,8 @@
     "label": "Chorus",
     "repeat": true
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "psalm-24",
@@ -1783,7 +1791,8 @@
      "Forever and ever. (×8)"
     ]
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "jonah-2",
@@ -1849,7 +1858,8 @@
      "Deceiving yourselves"
     ]
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "on-the-run",
@@ -1929,7 +1939,8 @@
     ],
     "note": "Jonah explains why he runs away. Song 1 of the Jonah play."
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "down-down-down",
@@ -2047,7 +2058,8 @@
     ],
     "note": "Intro: Am / E / Am / E. Keep swapping between Am and E through the “down, down” lines. Song 2 of the Jonah play."
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "god-listens-to-our-prayers",
@@ -2154,7 +2166,8 @@
     ],
     "note": "Song 3 of the Jonah play."
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "goliath",
@@ -2199,7 +2212,8 @@
      "(Everyone) You’ll never beat him, we’ll never beat him, ’cos he’s nine foot tall!"
     ]
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "shake-a-little-salt",
@@ -2228,7 +2242,8 @@
     "label": "Chorus",
     "repeat": true
    }
-  ]
+  ],
+  "section": "bible-explorers"
  },
  {
   "id": "weddings",
@@ -2279,6 +2294,7 @@
      "Such a beautiful day, it’s here to stay. (×2)"
     ]
    }
-  ]
+  ],
+  "section": "bible-explorers"
  }
 ]
