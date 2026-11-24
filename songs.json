@@ -2297,5 +2297,52 @@
    }
   ],
   "section": "bible-explorers"
+ },
+ {
+  "id": "growing-up",
+  "title": "Growing up",
+  "ref": "Psalm 1:3; Psalm 119:33–37",
+  "source": "Walsall Christadelphians",
+  "parts": [
+   {
+    "label": "Chorus",
+    "lines": [
+     "We’re growing up, up, up,",
+     "We’re growing up, up, up,",
+     "We’re growing up, up, up, up in the Lord. (×2)"
+    ]
+   },
+   {
+    "label": "Verse 1",
+    "lines": [
+     "We are like trees planted by the streams of water,",
+     "And our delight is in the Lord.",
+     "Our branches grow up, up, up, our roots grow down, down,",
+     "So we grow strong in your word."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "Teach us your way, O Lord, and we will keep it to the end,",
+     "Observing it with all our hearts.",
+     "And we will turn away our eyes from worthless things:",
+     "Lord, give us understanding."
+    ]
+   },
+   {
+    "label": "Ending",
+    "lines": [
+     "So we grow up, up, up,",
+     "We’re growing up, up, up, up,",
+     "We’re growing up, up, up, up in the Lord. (×2)"
+    ]
+   }
+  ],
+  "section": "bible-explorers"
  }
 ]
