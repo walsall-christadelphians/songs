@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f6b6b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Bible Explorers Songs">
+<meta name="application-name" content="Bible Explorers Songs">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Bible Explorers Songs</title>
+<style>
+/* VOICE: reverent, quiet, legible at arm's length in a dim church
+   IDEA: a cloth-bound pew hymnal — teal cover, white page
+   PICTURE: the hymn page itself, set like print; hymns filed A–Z by title
+   COLOUR and TYPE: teal cover band, white paper, dark ink; system font throughout
+   LAYOUT: cover band with search, then one calm reading column */
+:root{color-scheme:light dark;
+  --bg:light-dark(#f8fbfb,#0e1515);--ink:light-dark(#132021,#e2ecea);
+  --soft:light-dark(#5a6a69,#98aba8);--rule:light-dark(#d9e5e3,#22302f);
+  --cover:light-dark(#0f6b6b,#0a3b3c);--on:#f2fbfa;--accent:light-dark(#0f6b6b,#6fd0c6);
+  --fs:19px}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:clip}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header{background:var(--cover);color:var(--on);padding:14px max(5vw,16px) 18px;position:sticky;top:0;z-index:2}
+.bar{max-width:calc(760px - 2 * max(5vw,16px));margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+/* With Play all showing, it sits as one big round button beside both header rows */
+.bar:has(.playall:not([hidden])){display:grid;grid-template-columns:1fr auto auto;grid-template-areas:"brand brand play" "search install play";align-items:center;column-gap:10px;row-gap:10px}
+.bar:has(.playall:not([hidden])) .brand{grid-area:brand}
+.bar:has(.playall:not([hidden])) .search{grid-area:search;min-width:0}
+.bar:has(.playall:not([hidden])) .install{grid-area:install}
+.bar .playall{grid-area:play;align-self:center;width:92px;height:92px;padding:0;justify-content:center;border-radius:50%;margin-inline-start:4px}
+.bar .playall svg{width:44%;height:44%;margin:0;transform:translateX(-5%)}
+.brand{flex:1 1 100%;font:600 clamp(19px,4.5vw,26px)/1.15 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--on);text-decoration:none;margin-inline-end:auto;letter-spacing:.01em}
+.search{height:44px;border-radius:10px;border:1px solid #ffffff40;background:#ffffff18;color:var(--on);padding:0 12px;font-size:16px}
+.search::placeholder{color:#f3e6e0b0}
+.search{flex:1 1 160px}
+.btn{height:44px;min-width:44px;border-radius:10px;border:1px solid #ffffff40;background:#ffffff22;color:var(--on);padding:0 12px;cursor:pointer}
+.btn:hover{background:#ffffff33}
+.install{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:600}
+.install[hidden]{display:none}
+dialog{border:0;border-radius:16px;padding:22px 22px 18px;max-width:min(420px,calc(100vw - 32px));background:var(--bg);color:var(--ink);box-shadow:0 20px 60px #0006}
+dialog::backdrop{background:#0008}
+dialog h2{margin:0 0 12px;font-size:22px}
+dialog ol{margin:0;padding-inline-start:1.3em;font-size:17px;line-height:1.5}
+dialog li{margin-bottom:8px}
+.help-note{color:var(--soft);font-size:14px;margin:14px 0}
+.done{background:var(--accent)!important;color:var(--bg)!important;border:0!important;width:100%;font-size:17px;font-weight:600}
+.share-ico{display:inline-block;vertical-align:-3px}
+
+main{max-width:760px;margin:0 auto;padding:clamp(20px,4vw,44px) max(5vw,16px) 80px}
+.list{list-style:none;margin:0;padding:0}
+.list a{display:flex;align-items:center;gap:12px;padding:14px 4px;color:inherit;text-decoration:none}
+.list a:hover .t{color:var(--accent)}
+.list li{position:relative;display:flex;align-items:center;border-bottom:1px solid var(--rule)}
+.list li a{flex:1;border-bottom:0}
+.list li.now .t{color:var(--accent)}
+.playbtn{flex:none;display:grid;place-items:center;width:44px;height:44px;margin-inline-start:10px;border:0;border-radius:50%;background:light-dark(#e2563b,#f07a5f);color:#fff;cursor:pointer}
+.playbtn svg{width:20px;height:20px}
+.list-actions{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 6px}
+.list-actions .playall{margin:0}
+.save-offline{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border:2px solid var(--accent);border-radius:22px;background:none;color:var(--accent);font-size:16px;font-weight:600;cursor:pointer}
+.save-offline.saved{border-color:var(--rule);color:var(--soft);cursor:default}
+.save-bar{position:absolute;left:0;bottom:0;height:4px;background:var(--accent);transition:width .2s}
+.playall{flex:none;display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 22px;margin:0;border:0;border-radius:26px;box-shadow:0 2px 8px #0003;background:light-dark(#e2563b,#f07a5f);color:#fff;font-size:18px;font-weight:700;cursor:pointer}
+.playall[hidden]{display:none}
+.playall svg{width:22px;height:22px}
+.nowplaying{position:fixed;left:0;right:0;bottom:0;z-index:3;background:var(--cover);color:var(--on);padding-bottom:env(safe-area-inset-bottom)}
+.nowplaying[hidden]{display:none}
+.np-track{height:6px;background:#ffffff30;cursor:pointer}
+.np-fill{height:100%;width:0;background:#fff}
+.np-row{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:4px;padding:6px max(4vw,10px)}
+.np-title{flex:1;color:var(--on);text-decoration:none;font-weight:600;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.np-btn{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:50%;background:none;color:var(--on);font-size:18px;cursor:pointer}
+.np-btn svg{width:24px;height:24px}
+.np-btn:disabled{opacity:.35;cursor:default}
+.np-play{background:#ffffff26}
+.np-shuffle{position:relative;opacity:.55}
+.np-shuffle svg{width:21px;height:21px}
+.np-shuffle[aria-pressed="true"]{opacity:1}
+.np-shuffle[aria-pressed="true"]::after{content:'';position:absolute;bottom:4px;left:50%;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:currentColor}
+body.has-player main{padding-bottom:140px}
+
+.list .t{font:600 22px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.list .m{display:block;color:var(--soft);font-size:14px;margin-top:2px}
+.list .txt{flex:1}
+.badges{display:flex;gap:6px;flex:none}
+.badge{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;color:#fff}
+.badge svg{width:19px;height:19px}
+.list .badges{gap:10px;margin-inline-start:10px}
+.list a.badge{display:grid;place-items:center;width:44px;height:44px;padding:0;flex:none;color:#fff}
+.list a.badge svg{width:24px;height:24px}
+.b-rec{background:light-dark(#e2563b,#f07a5f)}
+.b-chords{background:light-dark(#7a4fd6,#9c7bf0)}
+.b-sheet{background:light-dark(#d99a00,#f0b429)}
+.songs-section + .songs-section{margin-top:28px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 4px 4px;border-bottom:2px solid var(--accent)}
+.sec-head h2{margin:0;font-size:20px;font-weight:700;color:var(--accent)}
+.sec-play{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px 0 10px;border:0;border-radius:18px;background:light-dark(#e2563b,#f07a5f);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+.sec-play svg{width:16px;height:16px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--soft);font-size:14px;margin:18px 0 6px;padding:0 4px}
+.legend > span{display:inline-flex;align-items:center;gap:6px}
+.legend .badge{width:24px;height:24px}.legend .badge svg{width:14px;height:14px}
+.empty{color:var(--soft);padding:24px 4px}
+.hymn-head{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:8px}
+h1{font:600 clamp(28px,5vw,42px)/1.05 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;margin:0;text-wrap:balance}
+.sub{color:var(--soft);font-size:14px;margin-top:6px}
+.tools{display:flex;gap:8px;justify-content:flex-end;margin:12px 0 6px;flex-wrap:wrap}
+.tools .btn{background:transparent;color:var(--ink);border-color:var(--rule)}
+.tools .btn:hover{background:var(--rule)}
+.tabs{position:sticky;top:var(--hh,0px);z-index:1;display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-bottom:1px solid var(--rule);margin:8px 0 0}
+.tabs button{height:48px;border:0;background:none;font-size:17px;font-weight:600;color:var(--soft);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+.pager{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;align-items:flex-start;overscroll-behavior-x:contain}
+.pager::-webkit-scrollbar{display:none}
+.panel{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;padding-top:6px}
+.cline{margin:0 0 6px;font-size:var(--fs);line-height:1.3}
+.seg{display:inline-flex;flex-direction:column;vertical-align:bottom;white-space:pre-wrap}
+.ch{font-size:.8em;font-weight:700;color:light-dark(#7a4fd6,#b9a2f5);min-height:1.2em;padding-inline-end:.35em}
+.chords-part{margin-top:22px}
+.glue{display:inline-flex;white-space:nowrap}
+.music-label{color:var(--accent);font-weight:600;font-size:15px;margin:18px 0 10px}
+.pagewrap{position:relative;margin:0 0 12px}
+.pagewrap .page{margin:0}
+.pagewrap.is-loading,.pagewrap.is-error{aspect-ratio:210/297;background:var(--rule);border-radius:6px}
+.pagewrap.is-loading .page,.pagewrap.is-error .page{opacity:0;position:absolute;inset:0;height:100%}
+.pagewrap.is-loading::after{content:'';position:absolute;top:50%;left:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border:4px solid light-dark(#fff,#2e3a39);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+.pagewrap.is-error::after{content:'Couldn’t load this page. Check your connection and try again.';position:absolute;inset:0;display:grid;place-items:center;padding:24px;text-align:center;color:var(--soft);font-size:15px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin{display:block;width:20px;height:20px;border:3px solid #ffffff55;border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+.audiowrap{position:relative}
+.audiowrap.is-loading::after{content:'';position:absolute;top:50%;right:14px;width:22px;height:22px;margin-top:-14px;border:3px solid var(--rule);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.pagewrap.is-loading::after,.spin,.audiowrap.is-loading::after{animation-duration:2.4s}}
+.page{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--rule);border-radius:6px;margin:0 0 12px}
+.note a{color:var(--accent)}
+.sheet{display:inline-flex;align-items:center;text-decoration:none;margin-inline-end:auto;color:var(--accent)!important;font-size:15px}
+.part{margin:28px 0 0;font-size:var(--fs);line-height:1.5}
+.label{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:6px}
+.label b{font:600 15px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--accent)}
+.label i{font-size:15px}
+.ref{color:var(--soft);font-size:13px;font-style:normal}
+.line{margin:0;padding-inline-start:1.4em;text-indent:-1.4em}
+.rec-label{margin:14px 0 -8px;font-size:14px;font-weight:600;color:var(--soft)}
+.player{display:block;width:100%;margin:14px 0 4px;height:44px}
+.chorus{padding-inline-start:1.4em;border-inline-start:3px solid var(--rule)}
+.chorus .line{font-style:italic}
+.echo{color:var(--soft);font-size:.88em}
+.note p{margin:0 0 6px}.credits{color:var(--ink);font-size:14px}
+.note{color:var(--soft);font-size:13px;margin-top:44px;border-top:1px solid var(--rule);padding-top:12px}
+.hymn-head .sub{padding-inline-start:42px}
+.title-row{display:flex;align-items:flex-start;gap:6px;margin-inline-start:-12px}
+.title-row h1{flex:1}
+.song-play{flex:none;display:flex;gap:8px;margin-inline-start:8px;margin-top:-4px}
+.song-play .rec{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;font-weight:600;color:var(--soft)}
+.song-play .playbtn{width:56px;height:56px;margin:0;box-shadow:0 2px 8px #0002}
+.song-play .playbtn svg{width:26px;height:26px}
+.tabs button{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 2px;white-space:nowrap;font-size:clamp(14px,4vw,17px)}
+.tabs .badge{flex:none;width:22px;height:22px}.tabs .badge svg{width:13px;height:13px}
+.back{flex:none;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;margin-top:-6px;border-radius:50%;color:var(--accent);text-decoration:none;font-size:34px;line-height:1}
+.back:hover{background:var(--rule)}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="#index">Bible Explorers Songs</a>
+    <button class="playall" id="playall" type="button" aria-label="Play all" title="Play all" hidden></button>
+    <input class="search" id="q" type="search" placeholder="Search" aria-label="Search hymns">
+    <button class="btn install" id="install" type="button" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>Install</button>
+  </div>
+</header>
+<main id="view"></main>
+<div class="nowplaying" id="nowplaying" hidden>
+  <div class="np-track" role="presentation"><div class="np-fill"></div></div>
+  <div class="np-row">
+    <a class="np-title" href="#index"></a>
+    <button class="np-btn np-shuffle" type="button" aria-label="Shuffle" aria-pressed="false" title="Shuffle"></button>
+    <button class="np-btn np-prev" type="button" aria-label="Previous"></button>
+    <button class="np-btn np-play" type="button" aria-label="Play"></button>
+    <button class="np-btn np-next" type="button" aria-label="Next"></button>
+    <button class="np-btn np-close" type="button" aria-label="Close player">✕</button>
+  </div>
+</div>
+<dialog id="install-help" aria-labelledby="install-title">
+  <h2 id="install-title">Install the app</h2>
+  <div id="install-steps"></div>
+  <p class="help-note">Once installed it opens from your home screen and works without an internet connection.</p>
+  <form method="dialog"><button class="btn done">Done</button></form>
+</dialog>
+
+<script>
+{
+let HYMNS = [];
+
+const view = document.getElementById('view');
+const q = document.getElementById('q');
+const slug = t => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = s => esc(s).replace(/\(([^)]+)\)/g, '<span class="echo">($1)</span>');
+
+let fs = 19;
+try { fs = +localStorage.getItem('hb-fs') || 19; } catch (e) {}
+const setFs = v => { fs = Math.min(30, Math.max(15, v)); document.documentElement.style.setProperty('--fs', fs + 'px'); try { localStorage.setItem('hb-fs', fs); } catch (e) {} };
+setFs(fs);
+
+const text = h => (h.title + ' ' + (h.ref || '') + ' ' + h.parts.map(p => (p.lines || []).join(' ') + ' ' + (p.ref || '') + ' ' + (p.theme || '')).join(' ')).toLowerCase();
+const refs = h => h.ref || '';
+const isChorus = l => /chorus|refrain/i.test(l);
+const credits = h => [...(h.words && h.words === h.music ? ['Words and music: ' + h.words] : [h.words && 'Words: ' + h.words, h.music && 'Music: ' + h.music]), h.source, h.year && '© ' + h.year].filter(Boolean).join(' · ');
+
+const ICONS = {
+  rec: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4.5" height="6.5" rx="1.5" fill="currentColor"/><rect x="16.5" y="14" width="4.5" height="6.5" rx="1.5" fill="currentColor"/></svg>',
+  chords: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 4h14M6 4v16M10 4v16M14 4v16M18 4v16M6 9h12M6 14h12"/><circle cx="10" cy="11.5" r="2" fill="currentColor" stroke="none"/><circle cx="14" cy="16.5" r="2" fill="currentColor" stroke="none"/></svg>',
+  sheet: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 4.5 20 2v13.5a3 3 0 1 1-2-2.83V6.6l-7 1.6v9.3a3 3 0 1 1-2-2.83z"/></svg>'
+};
+ICONS.play = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>';
+ICONS.shuffle = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.59 9.17 5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg>';
+ICONS.spin = '<span class="spin" role="img" aria-label="Loading"></span>';
+ICONS.pause = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+ICONS.prev = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 5h2v14H6zM19 6.2v11.6a1 1 0 0 1-1.6.8L9.5 13a1.2 1.2 0 0 1 0-2l7.9-5.6a1 1 0 0 1 1.6.8z"/></svg>';
+ICONS.next = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 5h2v14h-2zM5 6.2v11.6a1 1 0 0 0 1.6.8l7.9-5.6a1.2 1.2 0 0 0 0-2L6.6 5.4A1 1 0 0 0 5 6.2z"/></svg>';
+const firstRec = h => Array.isArray(h.audio) ? h.audio[0] && h.audio[0].src : h.audio;
+let listOrder = [];
+const SECTIONS = [{ id: 'everyone', title: 'Songs' }];
+const KINDS = { rec: 'Recording', chords: 'Chords', sheet: 'Sheet music' };
+const badge = (k, size) => `<span class="badge b-${k}" title="${KINDS[k]}" role="img" aria-label="${KINDS[k]}">${ICONS[k]}</span>`;
+const kinds = h => [h.audio && 'rec', ...['chords', 'sheet'].filter(k => (h.charts || []).some(c => c.kind === k))].filter(Boolean);
+
+function renderIndex(term = '') {
+  const t = term.trim().toLowerCase();
+  const hits = HYMNS.filter(h => !t || text(h).includes(t));
+  const legend = `<p class="legend"><span><span class="badge b-rec" aria-hidden="true">${ICONS.play}</span>Play recording</span>${['chords', 'sheet'].map(k => `<span>${badge(k)}${KINDS[k]}</span>`).join('')}</p>`;
+  // Two sections: songs for everyone, then Bible Explorers
+  const groups = SECTIONS.map(sec => ({ ...sec, songs: hits.filter(h => (h.section || 'everyone') === sec.id) })).filter(g => g.songs.length);
+  listOrder = groups.flatMap(g => g.songs).filter(firstRec);
+  const item = h => `<li data-id="${h.id}"><a href="#${h.id}"><span class="txt"><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span></a>${kinds(h).some(k => k !== 'rec') ? `<span class="badges">${kinds(h).filter(k => k !== 'rec').map(k => `<a class="badge b-${k}" href="#${h.id}/${k}" title="${KINDS[k]}" aria-label="${esc(h.title)}: ${KINDS[k]}">${ICONS[k]}</a>`).join('')}</span>` : ''}${firstRec(h) ? `<button class="playbtn" type="button" data-play="${h.id}" aria-label="Play ${esc(h.title)}">${ICONS.play}</button>` : ''}</li>`;
+  view.innerHTML = hits.length
+    ? groups.map(g => `<section class="songs-section" aria-labelledby="sec-${g.id}"><div class="sec-head"><h2 id="sec-${g.id}">${g.title}</h2>${g.songs.some(firstRec) ? `<button class="sec-play" type="button" data-section="${g.id}" aria-label="Play all ${g.title}">${ICONS.play}<span>Play</span></button>` : ''}</div><ul class="list">${g.songs.map(item).join('')}</ul></section>`).join('') + legend
+    : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
+  offline.bind();
+  const pa = document.getElementById('playall');
+  pa.innerHTML = ICONS.play;
+  pa.hidden = !listOrder.length;
+  pa.onclick = () => player.playQueue(listOrder, player.shuffled ? Math.floor(Math.random() * listOrder.length) : 0);
+  view.querySelectorAll('[data-section]').forEach(b => b.onclick = () => {
+    const q = groups.find(g => g.id === b.dataset.section).songs.filter(firstRec);
+    player.playQueue(q, player.shuffled ? Math.floor(Math.random() * q.length) : 0);
+  });
+  view.querySelectorAll('[data-play]').forEach(b => b.onclick = () => {
+    const id = b.dataset.play;
+    if (player.current && player.current.id === id) player.toggle();
+    else player.playQueue(listOrder, listOrder.findIndex(h => h.id === id));
+  });
+  player.mark();
+}
+
+// "[E]Elisha’s servant [B]fire" → chord names sit above the word where they change
+function chordLine(line) {
+  const segs = [];
+  const re = /\[([^\]]+)\]/g;
+  let last = 0, chord = '', m;
+  while ((m = re.exec(line))) {
+    if (m.index > last || chord) segs.push([chord, line.slice(last, m.index)]);
+    chord = m[1]; last = re.lastIndex;
+  }
+  segs.push([chord, line.slice(last)]);
+  // When a chord lands mid-word, move the start of that word next to the rest of it so the word never splits across lines
+  const items = [];
+  segs.filter(([c, t]) => c || t).forEach(([c, t], i, all) => {
+    const next = all[i + 1];
+    const midWord = next && t && !/\s$/.test(t) && next[1] && !/^\s/.test(next[1]);
+    const cut = midWord ? t.search(/\S+$/) : -1;
+    if (cut > 0) { items.push([c, t.slice(0, cut)]); items.push(['', t.slice(cut), true]); }
+    else items.push([c, t, midWord && cut === 0]);
+  });
+  const seg = ([c, t]) => `<span class="seg"><b class="ch">${c ? esc(c) : '&nbsp;'}</b><span>${esc(t).replace(/^ /, '&nbsp;').replace(/ $/, '&nbsp;') || '&nbsp;'}</span></span>`;
+  let html = '';
+  for (let i = 0; i < items.length; i++) {
+    if (items[i][2]) {
+      let g = seg([items[i][0], items[i][1] + '-']);
+      while (items[i][2] && i + 1 < items.length) { i++; g += seg(items[i][2] ? [items[i][0], items[i][1] + '-'] : items[i]); }
+      html += `<span class="glue">${g}</span>`;
+    }
+    else html += seg(items[i]);
+  }
+  return `<p class="cline">${html}</p>`;
+}
+
+function renderHymn(h, tab) {
+  document.getElementById('playall').hidden = true;
+  const parts = h.parts.map(p => {
+    const src = p.repeat ? h.parts.find(x => x.label === p.label && x.lines) : p;
+    const lines = src.lines;
+    return `<section class="part ${isChorus(p.label) ? 'chorus' : ''}">
+      ${p.label || p.theme || p.ref ? `<div class="label"><b>${esc(p.label)}</b>${p.theme ? `<i>${esc(p.theme)}</i>` : ''}${p.ref ? `<span class="ref">${esc(p.ref)}</span>` : ''}</div>` : ''}
+      ${lines.map(l => `<p class="line">${fmt(l)}</p>`).join('')}
+    </section>`;
+  }).join('');
+  const recs = Array.isArray(h.audio) ? h.audio : h.audio ? [{ src: h.audio }] : [];
+  const playBtns = recs.length ? `<div class="song-play">${recs.map((r, i) => `<span class="rec"><button class="playbtn" type="button" data-song="${h.id}" data-rec="${esc(r.src)}" aria-label="Play ${esc(recs.length > 1 ? (r.label || 'Recording ' + (i + 1)) : h.title)}">${ICONS.play}</button>${recs.length > 1 ? (i + 1) : ''}</span>`).join('')}</div>` : '';
+  const words = `
+    <div class="tools">
+      <button class="btn" id="smaller" aria-label="Smaller text">A−</button>
+      <button class="btn" id="bigger" aria-label="Larger text">A+</button>
+    </div>
+    ${parts}
+    <footer class="note">${credits(h) ? `<p class="credits">${esc(credits(h))}</p>` : ''}<p>Words in brackets are echoes or directions.${h.note ? ' ' + esc(h.note) : ''}</p></footer>`;
+  const head = `<div class="hymn-head"><div class="title-row"><a class="back" href="#index" aria-label="All songs" title="All songs">←</a><h1>${esc(h.title)}</h1>${playBtns}</div>${h.ref && h.ref !== h.title ? `<div class="sub">${esc(h.ref)}</div>` : ''}</div>`;
+  const charts = h.charts || [];
+  if (!charts.length) {
+    view.innerHTML = head + words;
+  } else {
+    const chartHtml = c => c.lines
+      ? `${c.note ? `<p class="music-label"><span class="ref">${esc(c.note)}</span></p>` : ''}
+        ${c.lines.map(p => `<section class="part chords-part"><div class="label"><b>${esc(p.label)}</b></div>${(p.repeat ? c.lines.find(x => x.label === p.label && x.lines) : p).lines.map(chordLine).join('')}</section>`).join('')}
+        ${c.pdf ? `<p class="note"><a href="${esc(c.pdf)}" target="_blank" rel="noopener">Original chord chart (PDF)</a></p>` : ''}`
+      : `${c.label !== KINDS[c.kind] ? `<p class="music-label">${esc(c.label)}</p>` : ''}
+        ${c.pages.map((src, i) => `<div class="pagewrap is-loading"><img class="page" src="${esc(src)}" alt="${esc(c.label)}, page ${i + 1} of ${c.pages.length}" loading="lazy" onload="this.parentNode.classList.remove('is-loading')" onerror="this.parentNode.classList.replace('is-loading','is-error')"></div>`).join('')}
+        ${c.pdf ? `<p class="note"><a href="${esc(c.pdf)}" target="_blank" rel="noopener">Open as PDF</a> to print or zoom in.</p>` : ''}`;
+    const names = ['Words', ...charts.map(c => `<span class="badge b-${c.kind}" aria-hidden="true">${ICONS[c.kind]}</span>${KINDS[c.kind]}`)];
+    const bodies = [words, ...charts.map(chartHtml)];
+    view.innerHTML = head + `<div class="tabs" role="tablist" style="grid-template-columns:repeat(${names.length},1fr)">
+        ${names.map((n, i) => `<button role="tab" id="tab-${i}" aria-controls="panel-${i}" aria-selected="${i === 0}"${i ? ' tabindex="-1"' : ''}>${n}</button>`).join('')}
+      </div>
+      <div class="pager" id="pager">
+        ${bodies.map((body, i) => `<section class="panel" id="panel-${i}" role="tabpanel" aria-labelledby="tab-${i}">${body}</section>`).join('')}
+      </div>`;
+    const start = charts.findIndex(c => c.kind === tab) + 1;
+    setupTabs(start);
+  }
+  view.querySelectorAll('[data-rec]').forEach(b => b.onclick = () => {
+    if (player.current && player.current.id === h.id && player.src === b.dataset.rec) player.toggle();
+    else { const all = HYMNS.filter(firstRec); player.playQueue(all, all.indexOf(h), b.dataset.rec); }
+  });
+  player.mark();
+  document.getElementById('smaller').onclick = () => setFs(fs - 2);
+  document.getElementById('bigger').onclick = () => setFs(fs + 2);
+  window.scrollTo(0, 0);
+}
+
+// Save for offline: puts every recording and sheet music page into the caches the service worker reads from
+const offline = (() => {
+  const AUDIO = 'be-songs-audio', MEDIA = 'be-songs-media';
+  const ok = 'caches' in window;
+  let busy = false, done = 0, total = 0, failed = 0, missing = null;
+  const ICON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>';
+  const TICK = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  const abs = u => new URL(u, location.href).href;
+  function files() {
+    const list = [];
+    HYMNS.forEach(h => {
+      (Array.isArray(h.audio) ? h.audio.map(a => a.src) : h.audio ? [h.audio] : []).forEach(u => list.push([AUDIO, abs(u)]));
+      (h.charts || []).forEach(c => { (c.pages || []).forEach(u => list.push([MEDIA, abs(u)])); if (c.pdf) list.push([MEDIA, abs(c.pdf)]); });
+    });
+    return list;
+  }
+  async function findMissing() {
+    const out = [];
+    for (const [name, url] of files()) if (!(await caches.match(url))) out.push([name, url]);
+    return out;
+  }
+  function label() {
+    if (busy) return `${ICON} Saving ${done} of ${total}…`;
+    if (failed) return `${ICON} Saved, but ${failed} failed. Try again`;
+    if (missing === null) return `${ICON} Save for offline`;
+    if (!missing.length) return `${TICK} Saved for offline`;
+    return `${ICON} Save for offline${missing.length < files().length ? ` (${missing.length} new)` : ''}`;
+  }
+  function paint() {
+    const b = document.getElementById('save-offline');
+    if (!b) return;
+    b.innerHTML = label() + (busy ? `<span class="save-bar" style="width:${total ? done / total * 100 : 0}%"></span>` : '');
+    b.classList.toggle('saved', !busy && !failed && missing && !missing.length);
+    b.setAttribute('aria-busy', busy);
+  }
+  async function run() {
+    if (busy) return;
+    busy = true; failed = 0; done = 0;
+    try { if (navigator.storage && navigator.storage.persist) await navigator.storage.persist(); } catch (e) {}
+    const todo = await findMissing();
+    total = todo.length; paint();
+    const queue = todo.slice();
+    const worker = async () => {
+      while (queue.length) {
+        const [name, url] = queue.shift();
+        try {
+          const res = await fetch(url, { cache: 'reload' });
+          if (!res.ok) throw new Error(res.status);
+          await (await caches.open(name)).put(url, res);
+        } catch (e) { failed++; }
+        done++; paint();
+      }
+    };
+    await Promise.all([worker(), worker(), worker()]);
+    busy = false;
+    missing = await findMissing();
+    paint();
+  }
+  return {
+    run,
+    button() { return ok ? `<button class="save-offline" id="save-offline" type="button">${label()}</button>` : ''; },
+    async bind() {
+      const b = document.getElementById('save-offline');
+      if (!b) return;
+      b.onclick = () => { if (!busy && !(missing && !missing.length && !failed)) run(); };
+      if (missing === null && !busy) { missing = await findMissing(); }
+      paint();
+    }
+  };
+})();
+
+// Playlist player: plays recordings one after another and keeps going while you browse
+const player = (() => {
+  const audio = new Audio();
+  audio.preload = 'auto';
+  const bar = document.getElementById('nowplaying');
+  bar.querySelector('.np-prev').innerHTML = ICONS.prev;
+  bar.querySelector('.np-next').innerHTML = ICONS.next;
+  const titleEl = bar.querySelector('.np-title');
+  const playBtn = bar.querySelector('.np-play');
+  const fill = bar.querySelector('.np-fill');
+  const seek = bar.querySelector('.np-track');
+  let queue = [], order = [], index = -1, loading = false;
+  // Shuffle: the current song stays, everything else plays in a random order. Remembered between visits.
+  const shuffleBtn = bar.querySelector('.np-shuffle');
+  shuffleBtn.innerHTML = ICONS.shuffle;
+  let shuffled = false;
+  try { shuffled = localStorage.getItem('shuffle') === '1'; } catch (e) {}
+  const mixed = list => { const q = list.slice(); for (let i = q.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [q[i], q[j]] = [q[j], q[i]]; } return q; };
+  function setShuffle(on) {
+    shuffled = on;
+    try { localStorage.setItem('shuffle', on ? '1' : '0'); } catch (e) {}
+    const cur = queue[index];
+    if (cur) {
+      queue = on ? [cur, ...mixed(order.filter(x => x !== cur))] : order.slice();
+      index = queue.indexOf(cur);
+    }
+    mark();
+  }
+  shuffleBtn.onclick = () => setShuffle(!shuffled);
+  const api = {
+    get current() { return queue[index] && queue[index].h; },
+    get src() { return queue[index] && queue[index].src; },
+    get shuffled() { return shuffled; },
+    playQueue(q, i, src) {
+      order = q.map(h => ({ h, src: firstRec(h) }));
+      if (src && order[i]) order[i].src = src;
+      const pick = order[i];
+      queue = shuffled && pick ? [pick, ...mixed(order.filter(x => x !== pick))] : order.slice();
+      load(queue.indexOf(pick));
+    },
+    toggle() { audio.paused ? audio.play() : audio.pause(); },
+    mark
+  };
+  function load(i) {
+    if (i < 0 || i >= queue.length) { stop(); return; }
+    index = i;
+    const { h, src } = queue[index];
+    audio.src = src;
+    loading = true;
+    audio.play().catch(() => {});
+    titleEl.textContent = h.title;
+    titleEl.href = '#' + h.id;
+    bar.hidden = false;
+    document.body.classList.add('has-player');
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({ title: h.title, artist: 'Bible Explorers Songs', artwork: [{ src: 'icon-512.png', sizes: '512x512', type: 'image/png' }] });
+    }
+    mark();
+  }
+  function stop() { audio.pause(); index = -1; mark(); }
+  function mark() {
+    const id = api.current && api.current.id;
+    const playing = id && !audio.paused;
+    const spin = playing && loading;
+    playBtn.innerHTML = spin ? ICONS.spin : playing ? ICONS.pause : ICONS.play;
+    playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
+    shuffleBtn.setAttribute('aria-pressed', shuffled);
+    shuffleBtn.setAttribute('aria-label', shuffled ? 'Shuffle is on' : 'Shuffle is off');
+    bar.querySelector('.np-prev').disabled = index <= 0;
+    bar.querySelector('.np-next').disabled = index < 0 || index >= queue.length - 1;
+    document.querySelectorAll('[data-rec]').forEach(b => {
+      const on = b.dataset.song === id && b.dataset.rec === api.src;
+      b.innerHTML = on && spin ? ICONS.spin : on && playing ? ICONS.pause : ICONS.play;
+      b.setAttribute('aria-label', b.getAttribute('aria-label').replace(/^(Play|Pause) /, on && playing ? 'Pause ' : 'Play '));
+    });
+    document.querySelectorAll('.list li').forEach(li => {
+      const on = li.dataset.id === id;
+      li.classList.toggle('now', on);
+      const b = li.querySelector('[data-play]');
+      if (b) { b.innerHTML = on && spin ? ICONS.spin : on && playing ? ICONS.pause : ICONS.play; b.setAttribute('aria-label', (on && playing ? 'Pause ' : 'Play ') + li.querySelector('.t').textContent); }
+    });
+  }
+  // Spinner while a recording is still loading
+  audio.addEventListener('waiting', () => { loading = true; mark(); });
+  audio.addEventListener('playing', () => { loading = false; mark(); });
+  audio.addEventListener('error', () => { loading = false; mark(); });
+  audio.addEventListener('play', mark);
+  audio.addEventListener('pause', mark);
+  audio.addEventListener('ended', () => load(index + 1));
+  audio.addEventListener('timeupdate', () => { fill.style.width = (audio.duration ? audio.currentTime / audio.duration * 100 : 0) + '%'; });
+  playBtn.onclick = () => { if (index < 0 && queue.length) load(0); else api.toggle(); };
+  bar.querySelector('.np-prev').onclick = () => { if (audio.currentTime > 3) audio.currentTime = 0; else load(index - 1); };
+  bar.querySelector('.np-next').onclick = () => load(index + 1);
+  bar.querySelector('.np-close').onclick = () => { stop(); bar.hidden = true; document.body.classList.remove('has-player'); };
+  seek.onclick = e => { if (audio.duration) { const r = seek.getBoundingClientRect(); audio.currentTime = (e.clientX - r.left) / r.width * audio.duration; } };
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.setActionHandler('play', () => audio.play());
+    navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+    navigator.mediaSession.setActionHandler('previoustrack', () => load(index - 1));
+    navigator.mediaSession.setActionHandler('nexttrack', () => load(index + 1));
+  }
+  // Only one thing plays at a time: a song page's own player pauses the playlist, and the other way round
+  // Same for the recordings on a song page
+  const wrapLoading = on => e => { const w = e.target.closest && e.target.closest('.audiowrap'); if (w) w.classList.toggle('is-loading', on(e.target)); };
+  ['play', 'waiting'].forEach(t => document.addEventListener(t, wrapLoading(a => a.readyState < 3), true));
+  ['playing', 'pause', 'error', 'canplay'].forEach(t => document.addEventListener(t, wrapLoading(a => !a.paused && a.readyState < 3), true));
+  document.addEventListener('play', e => {
+    document.querySelectorAll('audio').forEach(a => { if (a !== e.target) a.pause(); });
+    if (e.target !== audio) audio.pause();
+  }, true);
+  audio.addEventListener('play', () => document.querySelectorAll('audio').forEach(a => a.pause()));
+  return api;
+})();
+
+const headerEl = document.querySelector('header');
+const headerH = () => headerEl.offsetHeight;
+new ResizeObserver(() => document.documentElement.style.setProperty('--hh', headerH() + 'px')).observe(headerEl);
+let pagerObserver;
+function setupTabs(start = 0) {
+  const pager = document.getElementById('pager');
+  const panels = [...pager.children];
+  const tabs = [...document.querySelectorAll('.tabs [role=tab]')];
+  let current = 0;
+  const fit = () => { pager.style.height = panels[current].offsetHeight + 'px'; };
+  const select = (i, scroll) => {
+    current = i;
+    tabs.forEach((t, j) => { t.setAttribute('aria-selected', j === i); t.tabIndex = j === i ? 0 : -1; });
+    panels.forEach((p, j) => p.inert = j !== i);
+    if (scroll) pager.scrollTo({ left: i * pager.clientWidth, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    fit();
+    const target = pager.getBoundingClientRect().top + window.scrollY - headerH() - document.querySelector('.tabs').offsetHeight;
+    if (window.scrollY > target) window.scrollTo(0, target);
+  };
+  tabs.forEach((t, i) => {
+    t.onclick = () => select(i, true);
+    t.onkeydown = e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const n = Math.max(0, Math.min(tabs.length - 1, current + (e.key === 'ArrowRight' ? 1 : -1))); select(n, true); tabs[n].focus(); } };
+  });
+  let timer;
+  pager.addEventListener('scroll', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { const i = Math.round(pager.scrollLeft / pager.clientWidth); if (i !== current) select(i, false); }, 80);
+  }, { passive: true });
+  if (pagerObserver) pagerObserver.disconnect();
+  pagerObserver = new ResizeObserver(fit);
+  panels.forEach(p => pagerObserver.observe(p));
+  panels.forEach((p, j) => p.inert = j !== 0);
+  fit();
+  if (start) { pager.scrollLeft = start * pager.clientWidth; select(start, false); }
+}
+
+// Remember where you were in the list (and any search) so going back returns you there
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+let onIndex = true, listY = 0, listTerm = '';
+// Note the list position at the moment of the tap, before the page changes
+addEventListener('click', e => { if (onIndex && e.target.closest('.list a')) listY = window.scrollY; }, true);
+function route() {
+  const [id, tab] = location.hash.slice(1).split('/');
+  const h = id && HYMNS.find(x => x.id === id);
+  if (h) {
+    if (onIndex) listTerm = q.value;
+    onIndex = false; q.value = ''; renderHymn(h, tab);
+  } else if (!onIndex) {
+    onIndex = true; q.value = listTerm; renderIndex(listTerm);
+    window.scrollTo(0, listY);
+  } else renderIndex(q.value);
+}
+
+q.addEventListener('input', () => { if (HYMNS.some(x => location.hash.slice(1).split('/')[0] === x.id)) location.hash = 'index'; renderIndex(q.value); });
+addEventListener('hashchange', route);
+view.innerHTML = '<p class="empty">Loading…</p>';
+fetch('songs.json').then(r => r.json()).then(list => {
+  HYMNS = list.sort((a, b) => a.title.localeCompare(b.title, 'en-GB'));
+  route();
+  // In the installed app, quietly keep every recording and sheet music page saved for offline (only fetches what's new)
+  if (matchMedia('(display-mode: standalone)').matches || navigator.standalone === true) offline.run();
+}).catch(() => { view.innerHTML = '<p class="empty">Couldn’t load the songs. Check your connection and try again.</p>'; });
+
+
+// Install shortcut: native prompt where the browser offers one, step-by-step help elsewhere
+{
+  const btn = document.getElementById('install');
+  const dlg = document.getElementById('install-help');
+  const steps = document.getElementById('install-steps');
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const ua = navigator.userAgent;
+  const ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const macSafari = !ios && /Macintosh/.test(ua) && /Safari/.test(ua) && !/Chrome|Chromium|Edg|Firefox/.test(ua);
+  const share = '<svg class="share-ico" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Share"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11v9h12v-9"/></svg>';
+  let deferred = null;
+  const help = () => {
+    if (ios) steps.innerHTML = `<ol><li>Open this page in <b>Safari</b>.</li><li>Tap the <b>Share</b> button ${share} at the bottom of the screen.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>.</li></ol>`;
+    else if (macSafari) steps.innerHTML = `<ol><li>In Safari’s menu bar, choose <b>File</b>.</li><li>Choose <b>Add to Dock</b>.</li><li>Click <b>Add</b>.</li></ol>`;
+    else steps.innerHTML = `<ol><li>Open your browser’s menu (<b>⋮</b> or <b>…</b>).</li><li>Choose <b>Install app</b> or <b>Add to Home screen</b>.</li><li>Confirm.</li></ol><p class="help-note">This works in Chrome and Edge on Android, Windows and Mac.</p>`;
+    try { dlg.showModal(); } catch (e) { dlg.setAttribute('open', ''); }
+  };
+  if (!standalone) {
+    btn.hidden = false;
+    addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; });
+    btn.addEventListener('click', async () => {
+      // Installing also saves every recording and sheet music page, so the app works offline straight away
+      if (HYMNS.length) offline.run();
+      if (deferred) {
+        deferred.prompt();
+        const { outcome } = await deferred.userChoice;
+        deferred = null;
+        if (outcome === 'accepted') btn.hidden = true;
+      } else help();
+    });
+    addEventListener('appinstalled', () => { btn.hidden = true; });
+  }
+}
+
+if ('serviceWorker' in navigator) {
+  try { navigator.serviceWorker.register('sw.js').catch(() => {}); } catch (e) {}
+}
+}
+</script>
+</body>
+</html>
