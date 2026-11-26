@@ -2342,6 +2342,19 @@
    {
     "label": "Verse 1",
     "lines": [
+     "Let us start rebuilding,",
+     "Brick by brick;",
+     "My brick next to your brick,",
+     "Brick by brick."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
      "Hear us, God, and help us,",
      "Brick by brick.",
      "Your enemies insult us,",
@@ -2353,7 +2366,7 @@
     "repeat": true
    },
    {
-    "label": "Verse 2",
+    "label": "Verse 3",
     "lines": [
      "Don’t fear, but remember,",
      "Brick by brick:",

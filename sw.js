@@ -1,4 +1,4 @@
-const CACHE = 'hymnbook-v68';
+const CACHE = 'hymnbook-v69';
 // Recordings live in their own cache so app updates don't throw away downloaded audio
 const AUDIO = 'hymnbook-audio';
 // Sheet music saved by "Save for offline" (or when first viewed) also survives app updates
