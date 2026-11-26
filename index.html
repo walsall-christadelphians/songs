@@ -103,6 +103,8 @@ body.has-player main{padding-bottom:140px}
 .sec-head h2{margin:0;font-size:20px;font-weight:700;color:var(--accent)}
 .sec-play{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px 0 10px;border:0;border-radius:18px;background:light-dark(#e2563b,#f07a5f);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
 .sec-play svg{width:16px;height:16px}
+.more-link{display:flex;align-items:center;justify-content:center;gap:4px;margin:14px 0 4px;padding:14px 16px;border:2px solid var(--accent);border-radius:12px;color:var(--accent);font-weight:700;font-size:17px;text-decoration:none}
+.more-link:hover,.more-link:focus-visible{background:var(--accent);color:#fff}
 .legend{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--soft);font-size:14px;margin:18px 0 6px;padding:0 4px}
 .legend > span{display:inline-flex;align-items:center;gap:6px}
 .legend .badge{width:24px;height:24px}.legend .badge svg{width:14px;height:14px}
@@ -240,7 +242,7 @@ function renderIndex(term = '') {
   listOrder = groups.flatMap(g => g.songs).filter(firstRec);
   const item = h => `<li data-id="${h.id}"><a href="#${h.id}"><span class="txt"><span class="t">${esc(h.title)}</span><span class="m">${esc(refs(h))}</span></span></a>${kinds(h).some(k => k !== 'rec') ? `<span class="badges">${kinds(h).filter(k => k !== 'rec').map(k => `<a class="badge b-${k}" href="#${h.id}/${k}" title="${KINDS[k]}" aria-label="${esc(h.title)}: ${KINDS[k]}">${ICONS[k]}</a>`).join('')}</span>` : ''}${firstRec(h) ? `<button class="playbtn" type="button" data-play="${h.id}" aria-label="Play ${esc(h.title)}">${ICONS.play}</button>` : ''}</li>`;
   view.innerHTML = hits.length
-    ? groups.map(g => `<section class="songs-section" aria-labelledby="sec-${g.id}"><div class="sec-head"><h2 id="sec-${g.id}">${g.title}</h2>${g.songs.some(firstRec) ? `<button class="sec-play" type="button" data-section="${g.id}" aria-label="Play all ${g.title}">${ICONS.play}<span>Play</span></button>` : ''}</div><ul class="list">${g.songs.map(item).join('')}</ul></section>`).join('') + legend
+    ? groups.map(g => `<section class="songs-section" aria-labelledby="sec-${g.id}"><div class="sec-head"><h2 id="sec-${g.id}">${g.title}</h2>${g.songs.some(firstRec) ? `<button class="sec-play" type="button" data-section="${g.id}" aria-label="Play all ${g.title}">${ICONS.play}<span>Play</span></button>` : ''}</div><ul class="list">${g.songs.map(item).join('')}</ul>${g.id === 'bible-explorers' ? `<a class="more-link" href="bible-explorers/">More Bible Explorers songs<span aria-hidden="true"> →</span></a>` : ''}</section>`).join('') + legend
     : `<p class="empty">No hymns match “${esc(term)}”.</p>`;
   offline.bind();
   const pa = document.getElementById('playall');
