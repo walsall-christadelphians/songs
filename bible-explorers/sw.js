@@ -1,6 +1,6 @@
-const CACHE = 'be-songs-v1';
+const CACHE = 'be-songs-v2';
 // Recordings live in their own cache so app updates don't throw away downloaded audio
-const AUDIO = 'be-songs-audio';
+const AUDIO = 'be-songs-audio-2';
 // Sheet music saved by "Save for offline" (or when first viewed) also survives app updates
 const MEDIA = 'be-songs-media';
 const CORE = ['./', 'index.html', 'songs.json', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png', 'icon-180.png'];

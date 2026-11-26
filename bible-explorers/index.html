@@ -345,7 +345,7 @@ function renderHymn(h, tab) {
 
 // Save for offline: puts every recording and sheet music page into the caches the service worker reads from
 const offline = (() => {
-  const AUDIO = 'be-songs-audio', MEDIA = 'be-songs-media';
+  const AUDIO = 'be-songs-audio-2', MEDIA = 'be-songs-media';
   const ok = 'caches' in window;
   let busy = false, done = 0, total = 0, failed = 0, missing = null;
   const ICON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>';
