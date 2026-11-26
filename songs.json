@@ -2324,5 +2324,48 @@
     ]
    }
   ]
+ },
+ {
+  "id": "brick-by-brick",
+  "title": "Brick by brick",
+  "ref": "Nehemiah 4",
+  "source": "Walsall Christadelphians",
+  "audio": "audio/brick-by-brick.mp3",
+  "parts": [
+   {
+    "label": "Chorus",
+    "lines": [
+     "Together we are stronger, stronger,",
+     "Brick by brick by brick by brick. (×2)"
+    ]
+   },
+   {
+    "label": "Verse 1",
+    "lines": [
+     "Hear us, God, and help us,",
+     "Brick by brick.",
+     "Your enemies insult us,",
+     "Brick by brick."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "Don’t fear, but remember,",
+     "Brick by brick:",
+     "The Lord is great and awesome,",
+     "Brick by brick."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   }
+  ],
+  "section": "bible-explorers"
  }
 ]
