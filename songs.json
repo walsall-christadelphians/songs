@@ -1800,7 +1800,7 @@
  {
   "id": "jonah-2",
   "title": "Jonah 2",
-  "ref": "Jonah 2:2–7",
+  "ref": "Jonah 2:2–9",
   "words": "Scripture",
   "music": "James Pearson and Ben Dwyer",
   "audio": "audio/jonah-2.mp3",
@@ -1842,6 +1842,70 @@
      "and my prayer rose up to You",
      "to Your holy temple,",
      "to Your holy temple."
+    ]
+   },
+   {
+    "label": "Coda",
+    "lines": [
+     "But I, with a song of thanksgiving,",
+     "Will sacrifice to You;",
+     "What I have vowed I will make good:",
+     "Salvation comes from the LORD."
+    ]
+   }
+  ],
+  "charts": [
+   {
+    "kind": "chords",
+    "label": "Chords",
+    "lines": [
+     {
+      "label": "Verse 1",
+      "lines": [
+       "I [Dm]called in my distress to [Gm]Yahweh and He [D]answered me.",
+       "From the [Gm]depths of the [Bb]grave I cried, [A]You heard my voice.",
+       "You [Dm]cast me to the deep, [Gm]into the heart [D]of the seas,",
+       "And Your [Gm]waves passed [A]over [Dm]me."
+      ]
+     },
+     {
+      "label": "Chorus (a bit faster)",
+      "lines": [
+       "And I [D]said I am [D/F#]cast from Your [Gm]eyes;",
+       "[Bb]Yet I [Fsus4/C]will look [F]again",
+       "[Bb/D]To Your [C/E]holy [F]temple [A7/E] [Dm7] [Gm]",
+       "To Your holy [A]temple."
+      ]
+     },
+     {
+      "label": "Verse 2 (slow again)",
+      "lines": [
+       "[Dm]Water compassed me round [Gm]– [D]unto the soul;",
+       "The [Gm]depth en[Bb]circled me, [A]weeds wrapped round my head.",
+       "[Dm]To the bottom of the [Gm]moun[D]tains I went down;",
+       "The [Gm]earth barred [A]me for[Dm]ever."
+      ]
+     },
+     {
+      "label": "Chorus 2",
+      "lines": [
+       "But You [D]brought my life up from the [Gm]pit,",
+       "[Bb]Yah[Fsus4/C]weh my [F]God.",
+       "[Bb/D]When [C/E]my soul [F]fai[A7/E]nted [Dm]",
+       "[G]I remembered [F/C]Yah[C]weh,",
+       "And my [Bb/D]prayer rose [C/E]up to [F]You [A7/E] [Dm7] [Gm]",
+       "To Your holy [A]temple."
+      ]
+     },
+     {
+      "label": "Coda (slow, building volume)",
+      "lines": [
+       "[Dm]But [Gdim/E]I, with a song [F]of thanksgiving,",
+       "Will [Gm]sacri[F/A]fice to [A7/C#]You;",
+       "[F/A]What I [Bb]have vowed [F/C]I will [Bb/D]make good… (pause)",
+       "Sal[F/C]vation comes [C]from the [F]LORD."
+      ]
+     }
     ]
    }
   ]
