@@ -2,7 +2,73 @@
  {
   "id": "as-for-me-and-my-house",
   "title": "As for Me and My House",
-  "audio": "audio/as-for-me-and-my-house.mp3"
+  "ref": "Ecclesiastes 12; Joshua 4, 24; Deuteronomy 6; Proverbs 6–7",
+  "words": "Walsall Christadelphians",
+  "music": "Walsall Christadelphians",
+  "source": "Walsall Christadelphians",
+  "audio": "audio/as-for-me-and-my-house.mp3",
+  "parts": [
+   {
+    "label": "Chorus",
+    "lines": [
+     "As for me and my house we will serve the LORD",
+     "As for me and my house we will serve the LORD",
+     "Choose for yourselves who you will serve",
+     "But we will serve the LORD,",
+     "we will serve the LORD,",
+     "we will serve the LORD"
+    ]
+   },
+   {
+    "label": "Verse 1",
+    "lines": [
+     "Keep your father’s commands",
+     "They will guide you when you walk",
+     "And the teachings of your mother",
+     "When you’re awake they will talk",
+     "Bind them, tie them, write them, teach them, keep them…",
+     "They’re the way to life"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "With diligence and faith",
+     "In sincerity and truth",
+     "Remember your creator",
+     "In the days of your youth",
+     "Bind them, tie them, write them, teach them, keep them…",
+     "They’re the way to life"
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 3",
+    "lines": [
+     "Keeping these words",
+     "Will be a witness for the world",
+     "That God’s hand is mighty",
+     "That there’s light in His words",
+     "Bind them, tie them, write them, teach them, keep them…"
+    ]
+   },
+   {
+    "label": "Ending",
+    "lines": [
+     "Fear the LORD for ever",
+     "Serve the LORD",
+     "Serve the LORD",
+     "We’ll serve the LORD"
+    ]
+   }
+  ]
  },
  {
   "id": "be-beautiful-inside",
@@ -42,7 +108,46 @@
  {
   "id": "rejoice-in-the-lord-always",
   "title": "Rejoice in the Lord Always",
-  "audio": "audio/rejoice-in-the-lord-always.mp3"
+  "audio": "audio/rejoice-in-the-lord-always.mp3",
+  "ref": "Philippians 4:4",
+  "parts": [
+   {
+    "label": "Verse 1",
+    "lines": [
+     "Rejoice in the Lord always,",
+     "and again I say, rejoice.",
+     "Rejoice in the Lord always,",
+     "and again I say, rejoice.",
+     "Rejoice! Rejoice! And again I say, rejoice."
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "Pray to the Lord always,",
+     "and again I say to pray.",
+     "Pray to the Lord always,",
+     "and again I say to pray.",
+     "To pray! To pray! And again I say to pray."
+    ]
+   },
+   {
+    "label": "Verse 3",
+    "lines": [
+     "Give thanks to the Lord always,",
+     "and again I say, give thanks.",
+     "Give thanks to the Lord always,",
+     "and again I say, give thanks.",
+     "Give thanks! Give thanks! And again I say, give thanks."
+    ]
+   },
+   {
+    "label": "Round",
+    "lines": [
+     "Sing all three verses together as a round"
+    ]
+   }
+  ]
  },
  {
   "id": "remember-me",
@@ -52,7 +157,64 @@
  {
   "id": "standing-in-the-need-of-prayer",
   "title": "Standing in the Need of Prayer",
-  "audio": "audio/standing-in-the-need-of-prayer.mp3"
+  "audio": "audio/standing-in-the-need-of-prayer.mp3",
+  "source": "Traditional spiritual",
+  "parts": [
+   {
+    "label": "Chorus",
+    "lines": [
+     "It’s me, it’s me, it’s me, O Lord,",
+     "standing in the need of prayer.",
+     "It’s me, it’s me, it’s me, O Lord,",
+     "standing in the need of prayer."
+    ]
+   },
+   {
+    "label": "Verse 1",
+    "lines": [
+     "Not my brother, not my sister,",
+     "but it’s me, O Lord,",
+     "standing in the need of prayer.",
+     "Not my brother, not my sister,",
+     "but it’s me, O Lord,",
+     "standing in the need of prayer."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "Not my mother, not my father,",
+     "but it’s me, O Lord,",
+     "standing in the need of prayer.",
+     "Not my mother, not my father,",
+     "but it’s me, O Lord,",
+     "standing in the need of prayer."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   },
+   {
+    "label": "Verse 3",
+    "lines": [
+     "Not the stranger, not my neighbour,",
+     "but it’s me, O Lord,",
+     "standing in the need of prayer.",
+     "Not the stranger, not my neighbour,",
+     "but it’s me, O Lord,",
+     "standing in the need of prayer."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   }
+  ]
  },
  {
   "id": "talk-together",
