@@ -71,6 +71,43 @@
   ]
  },
  {
+  "id": "as-high-as-the-heavens",
+  "title": "As High as the Heavens",
+  "ref": "Psalm 103:11–14",
+  "words": "Scripture",
+  "music": "Simon James",
+  "source": "Walsall Christadelphians",
+  "audio": "audio/as-high-as-the-heavens.mp3",
+  "parts": [
+   {
+    "label": "Verse",
+    "lines": [
+     "For as high as the heavens",
+     "are above the earth,",
+     "so great is His steadfast love",
+     "towards those who fear Him; (those who fear Him)",
+     "as far as the east is from the west,",
+     "so far does He remove",
+     "our transgressions… (He removes them) from us."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "lines": [
+     "As a father shows compassion",
+     "to his children, so the LORD",
+     "shows compassion to those who fear Him.",
+     "For He knows our frame;",
+     "He remembers we are dust."
+    ]
+   },
+   {
+    "label": "Chorus",
+    "repeat": true
+   }
+  ]
+ },
+ {
   "id": "be-beautiful-inside",
   "title": "Be Beautiful Inside",
   "audio": "audio/be-beautiful-inside.mp3"
@@ -89,6 +126,37 @@
   "id": "gods-love-is-bubbling-over",
   "title": "God’s Love Is Bubbling Over",
   "audio": "audio/gods-love-is-bubbling-over.mp3"
+ },
+ {
+  "id": "if-we-say-we-have-no-sin",
+  "title": "If We Say We Have No Sin",
+  "ref": "1 John 1:8–9",
+  "words": "Scripture",
+  "music": "Simon James",
+  "source": "Walsall Christadelphians",
+  "audio": "audio/if-we-say-we-have-no-sin.mp3",
+  "parts": [
+   {
+    "label": "Verse 1",
+    "lines": [
+     "If we say we have no sin,",
+     "we deceive, deceive ourselves,",
+     "and the truth is not in us.",
+     "No, the truth is not in us."
+    ]
+   },
+   {
+    "label": "Verse 2",
+    "lines": [
+     "If we confess, confess our sins,",
+     "He is faithful, faithful and just",
+     "to forgive us our sins",
+     "and to cleanse us from all,",
+     "from all unrighteousness.",
+     "1 John 1, 8 and 9"
+    ]
+   }
+  ]
  },
  {
   "id": "k-i-n-g-d-o-m-coming-soon",
